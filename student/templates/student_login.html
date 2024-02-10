@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<title>Management System</title>
+
+	<!-- Fontfamily -->
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&amp;display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/login_bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+
+</head>
+
+<body>
+
+	<!-- Main Wrapper -->
+	<div class="main-wrapper login-body"">
+		<div class=" login-wrapper">
+		<div class="container">
+			<div class="loginbox">
+				<div class="login-left">
+					<img class="img-fluid" src="{% static 'img/login.png' %}" alt="Logo">
+				</div>
+				<div class="login-right">
+					<div class="login-right-wrap">
+
+						{% if messages %}
+						<div class="alert alert-secondary" role="alert">
+							{% for msg in messages %}
+							<strong>{{ msg }}</strong>
+							{% endfor %}
+						</div>
+						{% endif %}
+
+						<h1>Login as Student</h1>
+						<p class="account-subtitle">Enter your credentials to continue</p>
+						<form action="{% url 'student-login' %}" method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<label>Username<span class="login-danger">*</span></label>
+								<input class="form-control" type="text" style="background: rgb(255, 255, 255);"
+									name="username">
+							</div>
+							<div class="form-group">
+								<label>Password <span class="login-danger">*</span></label>
+								<input class="form-control pass-input" type="password"
+									style="background: rgb(255, 255, 255);" name="password">
+							</div>
+							<div class="form-group">
+								<a class="btn btn-primary btn-lg" type="submit" href="{% url 'home' %}">◄ Back</a>
+								<button class="btn btn-primary btn-lg" type="submit">Login ►</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- /Main Wrapper -->
+
+</body>
+
+</html>
