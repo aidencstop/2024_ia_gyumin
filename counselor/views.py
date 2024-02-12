@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from student.models import Student  # Importing Student model from student app
+from student.models import Student, ActivityExperience  # Importing Student model from student app
 from manager.models import CustomUser  # Importing CustomUser model from manager app
 
 # Create your views here.
@@ -82,9 +82,11 @@ def counselor_checkstudents(request):
 @login_required
 def counselor_checkdetails(request, id):
     students = Student.objects.get(id = id)
-
+    # Get existing record of the student
+    existing_activity_experiences = ActivityExperience.objects.filter(student=students).order_by('pk')
     context = {
         'students' : students,
+        'existing_activity_experiences': existing_activity_experiences,
     }
     return render(request, 'counselor_checkdetails.html', context)
 

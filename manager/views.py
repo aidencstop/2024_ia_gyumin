@@ -134,6 +134,7 @@ def manager_managemajors(request):
 def manager_managecatact(request):
     category = Category.objects.all()
     category_activity_tuples = [(category, category.activity_set.all()) for category in category]
+    print(category_activity_tuples)
 
     context = {
         'category_activity_tuples': category_activity_tuples,

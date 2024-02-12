@@ -31,4 +31,15 @@ class Student(models.Model):
 
     def __str__(self):
         return self.user.username
-    
+
+
+class ActivityExperience(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE, null=True, blank=True)
+    start_date = models.DateField(default='2000-01-01', null=True, blank=True)
+    end_date = models.DateField(default='2000-01-01', null=True, blank=True)
+    description = models.TextField(max_length=250, null=True)
+
+    def __str__(self):
+        return self.activity.name

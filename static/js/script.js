@@ -165,7 +165,7 @@
 	
 	if($('.datetimepicker').length > 0 ){
 		$('.datetimepicker').datetimepicker({
-			format: 'DD-MM-YYYY',
+			format: 'yyyy-mm-dd',
 			icons: {
 				up: "fas fa-angle-up",
 				down: "fas fa-angle-down",
@@ -558,7 +558,8 @@
 		return false;
     });
 
-    $(document).on("click",".add-btn",function () {
+    $(".add-new").on("click",function () {
+        print("found")
 		var experiencecontent = '<tr class="add-row">' +
 			'<td>' +
 				'<input type="text" class="form-control">' +
@@ -588,7 +589,9 @@
         $(".add-table-items").append(experiencecontent);
         return false;
     });
-		
+
+
+
 	feather.replace();
 	
 	

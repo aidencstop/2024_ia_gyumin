@@ -88,30 +88,51 @@ def student_initial(request):
 
     if request.method == 'POST':
         grade = request.POST.get('grade')
-        uni = request.POST.get('university')
-        mjr = request.POST.get('major')
-        cat = request.POST.get('category')
-        act = request.POST.getlist('activity')
-        startdate = request.POST.get('start-date')
-        enddate = request.POST.get('end-date')
-        description = request.POST.get('description')
+        university_id = request.POST.get('university')
+        major_id = request.POST.get('major')
+        category_id_list = request.POST.getlist('category')
+        activity_id_list = request.POST.getlist('activity')
+        start_date_list = request.POST.getlist('start-date')
+        end_date_list = request.POST.getlist('end-date')
+        description_list = request.POST.getlist('description')
 
-        if not all([grade, uni, mjr]):
+        if not all([grade, university_id, major_id]):
             messages.error(request, "Please fill out all the required fields!")
             return redirect('student-initial')
 
-        startdate = datetime.strptime(startdate, '%d-%m-%Y').date()
-        enddate = datetime.strptime(enddate, '%d-%m-%Y').date()
-
-        university_instance = get_object_or_404(University, name=uni)
-        major_instance = get_object_or_404(Major, name=mjr)
-        cat_instance = get_object_or_404(Category, name=cat)
-        activities = [get_object_or_404(Activity, name=name) for name in act]
-
-        student = Student(user=user_instance, grade=grade, university=university_instance, major=major_instance, category=cat_instance, start_date=startdate, end_date=enddate, description=description)
+        student = Student(user=user_instance,
+                          grade=grade,
+                          university=get_object_or_404(University, id=university_id),
+                          major=get_object_or_404(Major, id=major_id),
+                          )
         student.save()
 
-        student.activity.set(activities)
+        # add new activity experiences
+        for idx in range(len(category_id_list)):
+            curr_category = get_object_or_404(Category, id=category_id_list[idx])
+            curr_activity = get_object_or_404(Activity, id=activity_id_list[idx])
+            curr_start_date = start_date_list[idx]
+            curr_end_date = end_date_list[idx]
+            curr_description = description_list[idx]
+            # print(curr_category)
+            # print(curr_activity)
+            # print(curr_start_date)
+            # print(curr_end_date)
+            # print(curr_description)
+
+            ae = ActivityExperience(
+                student=student,
+                category=curr_category,
+                activity=curr_activity,
+                start_date=curr_start_date,
+                end_date=curr_end_date,
+                description=curr_description,
+            )
+            # student = Student(user=user_instance, grade=grade, university=university_instance, major=major_instance,
+            #                   category=cat_instance, start_date=startdate, end_date=enddate, description=description)
+            ae.save()
+
+
 
         messages.success(request, "Registration Successful!")
         return redirect('student-main')
@@ -138,28 +159,82 @@ def student_edit(request):
     # Assuming the user is already authenticated
     user_instance = request.user
 
+    if not Student.objects.filter(user=user_instance).exists():
+        messages.warning(request, "You have not completed the initial registration.")
+        return redirect('student-main')
+
     # Get the student instance for the authenticated user
     student_instance = get_object_or_404(Student, user=user_instance)
+
+    # Get existing record of the student
+    existing_activity_experiences = ActivityExperience.objects.filter(student=student_instance).order_by('pk')
+
+
+    major = Major.objects.all()
+    university = University.objects.all()
+    category = Category.objects.all()
+    activity = Activity.objects.all()
+    category_activity_tuples = [(category, category.activity_set.all()) for category in category]
+
 
     if request.method == 'POST':
         grade = request.POST.get('grade')
         university_id = request.POST.get('university')
         major_id = request.POST.get('major')
-        category_id = request.POST.get('category')
-        activity_ids = request.POST.getlist('activity')
-        start_date = request.POST.get('start-date')
-        end_date = request.POST.get('end-date')
-        description = request.POST.get('description')
+        category_id_list = request.POST.getlist('category')
+        activity_id_list = request.POST.getlist('activity')
+        start_date_list = request.POST.getlist('start-date')
+        end_date_list = request.POST.getlist('end-date')
+        description_list = request.POST.getlist('description')
 
         # Update the student instance with the new data
         student_instance.grade = grade
         student_instance.university_id = university_id
         student_instance.major_id = major_id
-        student_instance.category_id = category_id
-        student_instance.activity.set(activity_ids)
-        student_instance.start_date = start_date
-        student_instance.end_date = end_date
-        student_instance.description = description
+
+        new_activity_experiences = []
+        # update existing activity experiences
+        eae_cnt = len(existing_activity_experiences)
+        for idx in range(eae_cnt):
+            curr_eae = existing_activity_experiences[idx]
+            curr_category = get_object_or_404(Category, id=category_id_list[idx])
+            curr_activity = get_object_or_404(Activity, id=activity_id_list[idx])
+            curr_start_date = start_date_list[idx]
+            curr_end_date = end_date_list[idx]
+            curr_description = description_list[idx]
+
+            curr_eae.category = curr_category
+            curr_eae.activity = curr_activity
+            curr_eae.start_date = curr_start_date
+            curr_eae.end_date = curr_end_date
+            curr_eae.description = curr_description
+            curr_eae.save()
+
+        # add new activity experiences
+        for idx in range(eae_cnt, len(category_id_list)):
+
+            curr_category = get_object_or_404(Category, id=category_id_list[idx])
+            curr_activity = get_object_or_404(Activity, id=activity_id_list[idx])
+            curr_start_date = start_date_list[idx]
+            curr_end_date = end_date_list[idx]
+            curr_description = description_list[idx]
+            # print(curr_category)
+            # print(curr_activity)
+            # print(curr_start_date)
+            # print(curr_end_date)
+            # print(curr_description)
+
+            ae = ActivityExperience(
+                student=student_instance,
+                category=curr_category,
+                activity=curr_activity,
+                start_date=curr_start_date,
+                end_date=curr_end_date,
+                description=curr_description,
+            )
+            # student = Student(user=user_instance, grade=grade, university=university_instance, major=major_instance,
+            #                   category=cat_instance, start_date=startdate, end_date=enddate, description=description)
+            ae.save()
 
         # Save the updated instance
         student_instance.save()
@@ -174,10 +249,21 @@ def student_edit(request):
     selected_activities = student_instance.activity.all()
 
     context = {
+        'GRADE_CHOICES': Student.GRADE_CHOICES,
+        'curr_grade': Student.GRADE_CHOICES[student_instance.grade-1],
+        'curr_univ': University.objects.get(pk=student_instance.university_id),
+        'curr_major': Major.objects.get(pk=student_instance.major_id),
+        'major': major,
+        'university': university,
+        'category': category,
+        'activity': activity,
+        'category_activity_tuples': category_activity_tuples,
         'student_instance': student_instance,
         'selected_activities': selected_activities,
         'all_activities': all_activities,
+        'existing_activity_experiences': existing_activity_experiences,
     }
+    print(existing_activity_experiences[0].start_date)
     return render(request, 'student_edit.html', context)
 
 # View function for student recommendation
@@ -185,6 +271,10 @@ def student_edit(request):
 def student_recommendation(request):
     # Assuming you have a way to get the current user
     user_instance = request.user
+
+    if not Student.objects.filter(user=user_instance).exists():
+        messages.warning(request, "You have not completed the initial registration.")
+        return redirect('student-main')
 
     # Assuming you have a way to associate a Student with a user
     student_instance = Student.objects.get(user=user_instance)

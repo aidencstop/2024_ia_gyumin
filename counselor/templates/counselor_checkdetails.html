@@ -14,6 +14,7 @@
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 </head>
 
 <body>
@@ -92,6 +93,7 @@
                                                 class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
                                                 <thead class="student-thread">
                                                     <tr>
+                                                        <th style="background: #d7d7d1;">No.</th>
                                                         <th style="background: #d7d7d1;">Category</th>
                                                         <th style="background: #d7d7d1;">Activity</th>
                                                         <th style="background: #d7d7d1;">Start Date</th>
@@ -100,32 +102,26 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <!-- <tr>
-                                                        <td>{{ student.category.name }}</td>
-                                                        <td>{{ student.activity }}</td>
-                                                        <td>{{ student.start_date }}</td>
-                                                        <td>{{ student.end_date }}</td>
-                                                        <td>{{ student.description }}</td>
-                                                    </tr> -->
-                                                    <tr>
-                                                        <td>{{ students.category.name }}</td>
-                                                        <td>
-                                                            {% for activity in students.activity.all %}
-                                                            {{ activity.name }}{% if not forloop.last %}, {% endif %}
-                                                            {% endfor %}
-                                                        </td>
-                                                        <td>{{ students.start_date }}</td>
-                                                        <td>{{ students.end_date }}</td>
-                                                        <td>{{ students.description }}</td>
-                                                    </tr>
-                                                    <!-- <tr>
-                                                        <td>A</td>
-                                                        <td>Aa</td>
-                                                        <td>2 Feb 2002</td>
-                                                        <td>2 Feb 2002</td>
-                                                        <td>911 Deer Ridge Drive,USA</td>
-                                                    </tr> -->
-                                                </tbody>
+                                                        {% for eae in existing_activity_experiences %}
+                                                        <tr>
+                                                            <th>{{ forloop.counter }}</th>
+                                                            <td>
+                                                                {{ eae.category.name }}
+                                                            </td>
+                                                            <td>
+                                                                {{ eae.activity.name }}
+                                                            </td>
+                                                            <td>
+                                                                {{ eae.start_date|date:'Y.m.d' }}
+                                                            </td>
+                                                            <td>
+                                                                {{ eae.end_date|date:'Y.m.d' }}
+                                                            <td>
+                                                                {{ eae.description }}
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
                                             </table>
                                         </div>
                                     </div>
