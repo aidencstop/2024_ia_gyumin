@@ -593,6 +593,24 @@
 
 
 	feather.replace();
-	
+
 	
 })(jQuery);
+
+
+
+//'<tr><th scope="row">'+tableLength+'</th><td><div class="form-group local-forms"><select class="form-control select" name="category">{% for cat in category %}<option value="{{cat.id}}">{{ cat.name }}</option>{% endfor %}</select></div></td><td><div class="form-group local-forms"><select class="form-control select" name="activity">{% for act in activity %}<option value="{{act.id}}">{{ act.name }}</option>{% endfor %}</select></div></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="start-date"></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="end-date"></td><td><textarea class="form-control"name="description"></textarea></td></tr>'
+
+//`<td>
+//        <div class="form-group local-forms">
+//            <select class="form-control select" name="activity">
+//                {% for act in activity %}
+//                    {% if act.category.id == !@#$ %}
+//                        <option value="{{act.id}}">
+//                            {{act.name}}
+//                        </option>
+//                    {% endif %}
+//                {% endfor %}
+//            </select>
+//        </div>
+//    </td>`.replace('!@#$', tmp);

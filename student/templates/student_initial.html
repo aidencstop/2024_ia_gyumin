@@ -115,56 +115,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-<!--                                                        {% for eae in existing_activity_experiences %}-->
-<!--                                                        <tr>-->
-<!--                                                            <th>{{ forloop.counter }}</th>-->
-<!--                                                            <td>-->
-<!--                                                                <div class="form-group local-forms">-->
-<!--                                                                    <select class="form-control select" name="category">-->
-<!--                                                                        <option selected value="{{eae.category.id}}">{{ eae.category.name }}</option>-->
-<!--                                                                        {% for cat in category %}-->
-<!--                                                                        {% if cat.id != eae.category.id %}-->
-<!--                                                                            <option value="{{cat.id}}">{{ cat.name }}</option>-->
-<!--                                                                        {% endif %}-->
-<!--                                                                        {% endfor %}-->
-<!--                                                                    </select>-->
-<!--                                                                </div>-->
-<!--                                                            </td>-->
-<!--                                                            <td>-->
-<!--                                                                <div class="form-group local-forms">-->
-<!--                                                                    <select class="form-control select" name="activity">-->
-<!--                                                                        <option selected value="{{eae.activity.id}}">{{ eae.activity.name }}</option>-->
-<!--                                                                        {% for act in activity %}-->
-<!--                                                                        {% if act.id != eae.activity.id %}-->
-<!--                                                                            <option value="{{act.id}}">{{ act.name }}</option>-->
-<!--                                                                        {% endif %}-->
-<!--                                                                        {% endfor %}-->
-<!--                                                                    </select>-->
-<!--                                                                </div>-->
-<!--                                                            </td>-->
-<!--                                                            <td>-->
-<!--                                                                <input-->
-<!--                                                                    class="datePicker form-control"-->
 
-<!--                                                                    type="date"-->
-<!--                                                                    value="{{ eae.start_date|date:'Y-m-d' }}"-->
-<!--                                                                    name="start-date"-->
-<!--                                                                >-->
-<!--                                                            </td>-->
-<!--                                                            <td>-->
-<!--                                                                <input-->
-<!--                                                                    class="datePicker form-control"-->
-
-<!--                                                                    type="date"-->
-<!--                                                                    value="{{ eae.end_date|date:'Y-m-d' }}"-->
-<!--                                                                    name="end-date"></td>-->
-<!--                                                            <td>-->
-<!--                                                                <textarea class="form-control" name="description">-->
-<!--                                                                    {{ eae.description }}-->
-<!--                                                                </textarea>-->
-<!--                                                            </td>-->
-<!--                                                        </tr>-->
-<!--                                                        {% endfor %}-->
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -210,7 +161,7 @@
   var tableLength = tableObj.rows.length;
   console.log(tableLength);
   function childrenRow() {
-  $('#student_edit_table').find('tbody').append('<tr><th scope="row">'+tableLength+'</th><td><div class="form-group local-forms"><select class="form-control select" name="category">{% for cat in category %}<option value="{{cat.id}}">{{ cat.name }}</option>{% endfor %}</select></div></td><td><div class="form-group local-forms"><select class="form-control select" name="activity">{% for act in activity %}<option value="{{act.id}}">{{ act.name }}</option>{% endfor %}</select></div></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="start-date"></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="end-date"></td><td><textarea class="form-control"name="description"></textarea></td></tr>'
+  $('#student_edit_table').find('tbody').append('<tr><th scope="row">'+tableLength+'</th><td><div class="form-group local-forms"><select class="form-control select" onchange="doSomething(this);" name="category">{% for cat in category %}<option value="{{cat.id}}">{{ cat.name }}</option>{% endfor %}</select></div></td><td><div class="form-group local-forms"><select class="form-control select" name="activity">{% for act in activity %}<option value="{{act.id}}">{{ act.name }}</option>{% endfor %}</select></div></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="start-date"></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="end-date"></td><td><textarea class="form-control"name="description"></textarea></td></tr>'
   );
   }
   $(function() {
@@ -241,4 +192,40 @@
 
 		});//datepicker end
 	});//ready end
+
+	function doSomething(obj){
+
+        console.log(obj.value);
+        let tmp = String(obj.value);
+        var category_id_list = {{category_id_list|safe}};
+        var activity_id_list = {{activity_id_list|safe}};
+        var activity_name_list = {{activity_name_list|safe}};
+
+        var full_text = `<td>
+    <div class="form-group local-forms">
+        <select class="form-control select" name="activity">`;
+
+        console.log(category_id_list);
+
+        for (let i = 0; i < category_id_list.length; i++) {
+          if(obj.value==category_id_list[i]){
+            console.log(i)
+            tmp_text='<option value="id">'.replace('id', String(activity_id_list[i]))+" name ".replace('name', String(activity_name_list[i]))+'</option>';
+            console.log(tmp_text);
+            full_text = full_text+tmp_text;
+          }
+        }
+
+        full_text = full_text + `</select>
+    </div>
+</td>`;
+    console.log(full_text);
+
+
+
+
+
+
+    obj.parentElement.parentElement.parentElement.children[2].innerHTML=full_text
+    };
 </script>

@@ -132,8 +132,11 @@ def manager_managemajors(request):
 # View function for managing categories and activities
 @login_required
 def manager_managecatact(request):
-    category = Category.objects.all()
-    category_activity_tuples = [(category, category.activity_set.all()) for category in category]
+    categories = Category.objects.all()
+    category_activity_tuples = []
+    for category in categories:
+        activities = Activity.objects.filter(category=category)
+        category_activity_tuples.append((category, activities))
     print(category_activity_tuples)
 
     context = {
@@ -164,9 +167,11 @@ def manager_addact(request):
         # Check if the selected category ID is valid
         if cat_id:
             category = Category.objects.get(pk=cat_id)
+            print(category)
             # Create a new Activity associated with the selected category
             new_activity = Activity.objects.create(name=act_name)
-            new_activity.category.set([category])  # Use set() to manage many-to-many relationship
+            new_activity.category=category  # Use set() to manage many-to-many relationship
+            new_activity.save()
             return redirect('manager-managecatact')
 
     context = {

@@ -11,6 +11,8 @@ from xhtml2pdf import pisa
 from .models import *  # Importing models from current app
 from manager.models import *  # Importing models from manager app
 
+import json
+
 # Create your views here.
 
 # View function for student login
@@ -79,6 +81,15 @@ def student_initial(request):
     category = Category.objects.all()
     activity = Activity.objects.all()
 
+    category_id_list = []
+    activity_id_list = []
+    activity_name_list = []
+
+    for act in activity:
+        category_id_list.append(act.category.id)
+        activity_id_list.append(act.id)
+        activity_name_list.append(act.name)
+
     # Assuming the user is already authenticated
     user_instance = request.user
 
@@ -143,6 +154,9 @@ def student_initial(request):
         'category': category,
         'activity': activity,
         'GRADE_CHOICES': Student.GRADE_CHOICES,
+        'category_id_list': json.dumps(category_id_list),
+        'activity_id_list': json.dumps(activity_id_list),
+        'activity_name_list': json.dumps(activity_name_list),
     }
     return render(request, 'student_initial.html', context)
 
@@ -175,6 +189,16 @@ def student_edit(request):
     category = Category.objects.all()
     activity = Activity.objects.all()
     category_activity_tuples = [(category, category.activity_set.all()) for category in category]
+    category_activity_dict = {}
+    for t in category_activity_tuples:
+        if t[0] in category_activity_dict.keys():
+            pass
+        else:
+            category_activity_dict[t[0]] = []
+        for tt in t[1]:
+            category_activity_dict[t[0]].append(tt)
+    # print(category_activity_dict)
+
 
 
     if request.method == 'POST':
@@ -248,6 +272,19 @@ def student_edit(request):
     # Pass selected activities to the template context
     selected_activities = student_instance.activity.all()
 
+    category_id_list = []
+    activity_id_list = []
+    activity_name_list = []
+
+    for act in activity:
+        category_id_list.append(act.category.id)
+        activity_id_list.append(act.id)
+        activity_name_list.append(act.name)
+
+    print(category_id_list)
+    print(activity_id_list)
+    print(activity_name_list)
+    print(json.dumps(category_id_list))
     context = {
         'GRADE_CHOICES': Student.GRADE_CHOICES,
         'curr_grade': Student.GRADE_CHOICES[student_instance.grade-1],
@@ -256,14 +293,19 @@ def student_edit(request):
         'major': major,
         'university': university,
         'category': category,
+        # 'category_json': json.dumps(category),
         'activity': activity,
         'category_activity_tuples': category_activity_tuples,
+        'category_id_list': json.dumps(category_id_list),
+        'activity_id_list': json.dumps(activity_id_list),
+        'activity_name_list': json.dumps(activity_name_list),
         'student_instance': student_instance,
         'selected_activities': selected_activities,
         'all_activities': all_activities,
         'existing_activity_experiences': existing_activity_experiences,
     }
-    print(existing_activity_experiences[0].start_date)
+
+
     return render(request, 'student_edit.html', context)
 
 # View function for student recommendation

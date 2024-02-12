@@ -24,7 +24,7 @@ class Category(models.Model):
 
 class Activity(models.Model):
     name = models.CharField(max_length=50)
-    category = models.ManyToManyField(Category)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name

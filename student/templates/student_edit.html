@@ -131,7 +131,7 @@
                                                             <th>{{ forloop.counter }}</th>
                                                             <td>
                                                                 <div class="form-group local-forms">
-                                                                    <select class="form-control select" name="category">
+                                                                    <select class="form-control select" onchange="doSomething(this);" name="category">
                                                                         <option selected value="{{eae.category.id}}">{{ eae.category.name }}</option>
                                                                         {% for cat in category %}
                                                                         {% if cat.id != eae.category.id %}
@@ -145,14 +145,19 @@
                                                                 <div class="form-group local-forms">
                                                                     <select class="form-control select" name="activity">
                                                                         <option selected value="{{eae.activity.id}}">{{ eae.activity.name }}</option>
-                                                                        {% for act in activity %}
-                                                                        {% if act.id != eae.activity.id %}
-                                                                            <option value="{{act.id}}">{{ act.name }}</option>
+                                                                        {% for category, activities in category_activity_tuples %}
+                                                                        {% if category.id == eae.category.id %}
+                                                                            {% for activity in activities %}
+                                                                                {% if activity.id != eae.activity.id %}
+                                                                                    <option value="{{activity.id}}">{{ activity.name }}</option>
+                                                                                {% endif %}
+                                                                            {% endfor %}
                                                                         {% endif %}
                                                                         {% endfor %}
                                                                     </select>
                                                                 </div>
                                                             </td>
+
                                                             <td>
                                                                 <input
                                                                     class="datePicker form-control"
@@ -220,9 +225,10 @@
 <script>
   var tableObj = document.getElementById("student_edit_table");
   var tableLength = tableObj.rows.length;
-  console.log(tableLength);
+<!--  let data = {{ search_list | safe }};-->
   function childrenRow() {
-  $('#student_edit_table').find('tbody').append('<tr><th scope="row">'+tableLength+'</th><td><div class="form-group local-forms"><select class="form-control select" name="category">{% for cat in category %}<option value="{{cat.id}}">{{ cat.name }}</option>{% endfor %}</select></div></td><td><div class="form-group local-forms"><select class="form-control select" name="activity">{% for act in activity %}<option value="{{act.id}}">{{ act.name }}</option>{% endfor %}</select></div></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="start-date"></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="end-date"></td><td><textarea class="form-control"name="description"></textarea></td></tr>'
+  console.log($('#student_edit_table').find('tbody'));
+  $('#student_edit_table').find('tbody').append('<tr><th scope="row">'+tableLength+'</th><td><div class="form-group local-forms"><select class="form-control select" onchange="doSomething(this);" name="category">{% for cat in category %}<option value="{{cat.id}}">{{ cat.name }}</option>{% endfor %}</select></div></td><td><div class="form-group local-forms"><select class="form-control select" name="activity">{% for act in activity %}<option value="{{act.id}}">{{ act.name }}</option>{% endfor %}</select></div></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="start-date"></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="end-date"></td><td><textarea class="form-control"name="description"></textarea></td></tr>'
   );
   }
   $(function() {
@@ -253,4 +259,57 @@
 
 		});//datepicker end
 	});//ready end
+<!--  https://stackoverflow.com/questions/26709969/call-javascript-function-onchange-event-of-dropdown-list-->
+    function doSomething(obj){
+
+        console.log(obj.value);
+        let tmp = String(obj.value);
+        var category_id_list = {{category_id_list|safe}};
+        var activity_id_list = {{activity_id_list|safe}};
+        var activity_name_list = {{activity_name_list|safe}};
+
+        var full_text = `<td>
+    <div class="form-group local-forms">
+        <select class="form-control select" name="activity">`;
+
+        console.log(category_id_list);
+
+        for (let i = 0; i < category_id_list.length; i++) {
+          if(obj.value==category_id_list[i]){
+            console.log(i)
+            tmp_text='<option value="id">'.replace('id', String(activity_id_list[i]))+" name ".replace('name', String(activity_name_list[i]))+'</option>';
+            console.log(tmp_text);
+            full_text = full_text+tmp_text;
+          }
+        }
+
+        full_text = full_text + `</select>
+    </div>
+</td>`;
+    console.log(full_text);
+
+
+
+
+
+
+    obj.parentElement.parentElement.parentElement.children[2].innerHTML=full_text
+    };
+
 </script>
+<!--전체-->
+<!--<td><div class="form-group local-forms"><select class="form-control select" name="activity">{% for act in activity %}<option value="{{act.id}}">{{ act.name }}</option>{% endfor %}</select></div></td>-->
+
+<!--<td>-->
+<!--    <div class="form-group local-forms">-->
+<!--        <select class="form-control select" name="activity">-->
+<!--            {% for act in activity %}-->
+<!--                {% if act.category.id == '+selected_category_text+' %}-->
+<!--                    <option value="{{act.id}}">-->
+<!--                        {{ act.name }}-->
+<!--                    </option>-->
+<!--                {% endif %}-->
+<!--            {% endfor %}-->
+<!--        </select>-->
+<!--    </div>-->
+<!--</td>-->
