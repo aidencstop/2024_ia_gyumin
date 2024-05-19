@@ -47,7 +47,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     ROLE_CHOICES = [
         ('manager', 'Manager'),
         ('counselor', 'Counselor'),
-        ('student', 'Student')
     ]
 
     username = models.CharField(max_length=50, unique=True)

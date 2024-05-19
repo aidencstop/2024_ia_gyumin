@@ -1,0 +1,315 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Management System</title>
+
+    <!-- Fontfamily -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+    <style>
+        .col-sm-3 {
+            width: 30%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h3 style="transform: translateY(5px);">Management System</h3>
+            </div>
+        </div>
+        <!-- /Header -->
+
+        <!-- Page Wrapper -->
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col-sm-12">
+                            <div class="page-sub-header">
+                                <h3 class="page-title">Welcome, STUDENT NAME</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card comman-shadow">
+                            <div class="card-body">
+                                <form method="POST" action="{% url 'student-initial' %}" id="studentForm">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h1 class="form-title student-info"
+                                                style="font-weight: 500; font-size: initial;"><b>Enter your details</b>
+                                            </h1>
+                                        </div>
+                                        <div class="col-12 col-sm-3">
+                                            <div class="form-group local-forms">
+                                                <label>Grade</label>
+                                                <select class="form-control select" name="grade">
+                                                    {% for grade, grade_label in GRADE_CHOICES %}
+                                                        <option value="{{ grade }}">{{ grade_label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-3">
+                                            <div class="form-group local-forms">
+                                                <label>University</label>
+                                                <select class="form-control select" name="university">
+                                                    {% for uni in university %}
+                                                        <option value="{{uni.id}}">{{ uni.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-3">
+                                            <div class="form-group local-forms">
+                                                <label>Major</label>
+                                                <select class="form-control select" name="major">
+                                                    {% for maj in major %}
+                                                        <option value="{{maj.id}}">{{ maj.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="table-wrapper">
+                                            <div class="table-title">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <h3 class="form-title student-info"> + Add Additional Fields</h3>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <button type="button" class="btn btn-info" id="add_new_button" onclick="childrenRow()">Add New</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table id="student_edit_table"
+                                                    class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                                    <thead class="student-thread">
+                                                        <tr>
+                                                            <th style="background: #d7d7d1;" data-field="number">No.</th>
+                                                            <th style="background: #d7d7d1;" data-field="category">Category</th>
+                                                            <th style="background: #d7d7d1;" data-field="activity">Activity</th>
+                                                            <th style="background: #d7d7d1;" data-field="startdate">Start Date</th>
+                                                            <th style="background: #d7d7d1;" data-field="enddate">End Date</th>
+                                                            <th style="background: #d7d7d1;" data-field="description">Description</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-8 col-sm-3">
+                                                <div class="student-submit">
+                                                    <a type="submit" class="btn btn-primary"
+                                                        href="{% url 'student-main' %}">Back</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 col-sm-3">
+                                                <div class="student-submit">
+                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Wrapper -->
+
+    </div>
+    <!-- /Main Wrapper -->
+
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'plugins/select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+
+
+</body>
+
+</html>
+<script>
+  var tableObj = document.getElementById("student_edit_table");
+  var tableLength = tableObj.rows.length;
+  console.log(tableLength);
+  function childrenRow() {
+  $('#student_edit_table').find('tbody').append('<tr><th scope="row">'+tableLength+'</th><td><div class="form-group local-forms"><select class="form-control select" onchange="doSomething(this);" name="category">{% for cat in category %}<option value="{{cat.id}}">{{ cat.name }}</option>{% endfor %}</select></div></td><td><div class="form-group local-forms"><select class="form-control select" name="activity">{% for act in activity %}<option value="{{act.id}}">{{ act.name }}</option>{% endfor %}</select></div></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="start-date"></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="end-date"></td><td><textarea class="form-control"name="description"></textarea></td></tr>'
+  );
+  }
+  $(function() {
+		$('.datePicker').datepicker({
+		    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+<!--		    startDate: '-10d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)-->
+<!--		    endDate: '+10d',	//달력에서 선택 할 수 있는 가장 느린 날짜. 이후로 선택 불가 ( d : 일 m : 달 y : 년 w : 주)-->
+		    autoclose : true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+		    calendarWeeks : false, //캘린더 옆에 몇 주차인지 보여주는 옵션 기본값 false 보여주려면 true
+		    clearBtn : false, //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
+<!--		    datesDisabled : [],//선택 불가능한 일 설정 하는 배열 위에 있는 format 과 형식이 같아야함.-->
+		    daysOfWeekDisabled : [],	//선택 불가능한 요일 설정 0 : 일요일 ~ 6 : 토요일
+		    daysOfWeekHighlighted : [], //강조 되어야 하는 요일 설정
+		    disableTouchKeyboard : false,	//모바일에서 플러그인 작동 여부 기본값 false 가 작동 true가 작동 안함.
+		    immediateUpdates: false,	//사용자가 보는 화면으로 바로바로 날짜를 변경할지 여부 기본값 :false
+		    multidate : false, //여러 날짜 선택할 수 있게 하는 옵션 기본값 :false
+		    multidateSeparator :",", //여러 날짜를 선택했을 때 사이에 나타나는 글짜 2019-05-01,2019-06-01
+		    templates : {
+		        leftArrow: '&laquo;',
+		        rightArrow: '&raquo;'
+		    }, //다음달 이전달로 넘어가는 화살표 모양 커스텀 마이징
+		    showWeekDays : true ,// 위에 요일 보여주는 옵션 기본값 : true
+		    title: "Calendar",	//캘린더 상단에 보여주는 타이틀
+		    todayHighlight : false ,	//오늘 날짜에 하이라이팅 기능 기본값 :false
+		    toggleActive : true,	//이미 선택된 날짜 선택하면 기본값 : false인경우 그대로 유지 true인 경우 날짜 삭제
+		    weekStart : 0 ,//달력 시작 요일 선택하는 것 기본값은 0인 일요일
+		    language : "en"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+
+		});//datepicker end
+	});//ready end
+
+	function doSomething(obj){
+
+        console.log(obj.value);
+        let tmp = String(obj.value);
+        var category_id_list = {{category_id_list|safe}};
+        var activity_id_list = {{activity_id_list|safe}};
+        var activity_name_list = {{activity_name_list|safe}};
+
+        var full_text = `<td>
+    <div class="form-group local-forms">
+        <select class="form-control select" name="activity">`;
+
+        console.log(category_id_list);
+
+        for (let i = 0; i < category_id_list.length; i++) {
+          if(obj.value==category_id_list[i]){
+            console.log(i)
+            tmp_text='<option value="id">'.replace('id', String(activity_id_list[i]))+" name ".replace('name', String(activity_name_list[i]))+'</option>';
+            console.log(tmp_text);
+            full_text = full_text+tmp_text;
+          }
+        }
+
+        full_text = full_text + `</select>
+    </div>
+</td>`;
+    console.log(full_text);
+
+
+
+
+
+
+    obj.parentElement.parentElement.parentElement.children[2].innerHTML=full_text
+    };
+</script>
+<script>
+  var tableObj = document.getElementsByClassName("divtableactivitytable");
+
+<!--  let data = {{ search_list | safe }};-->
+  function childrenRow() {
+
+  var tableLength = document.getElementsByClassName("divtableactivitydatarow").length;
+  var newRowNum =tableLength +1;
+  console.log(tableLength);
+  document.getElementsByClassName("divtableactivitytable")[0].innerHTML += '<div id="w-node-d00705c6-8653-bff0-ba57-7f0d286aa5f1-ea29bdb6" class="divtableactivitydatarow"><div id="w-node-_179c3a27-b557-71e4-c74d-f36f7d2376ff-ea29bdb6" class="divtableactivitydata">'+newRowNum+'</div><div id="w-node-_78070132-824c-3a9f-6144-c948126de6db-ea29bdb6" class="divtableactivitydata"><div class="formblockstdregactivity w-form"><select id="category" name="category" data-name="category" class="selectfieldstdregactivity w-select" onchange="doSomething(this);">{% for cat in category %}<option value="{{cat.id}}">{{ cat.name }}</option>{% endfor %}</select><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div id="w-node-_89978e05-ed16-f28e-dbf6-6242b736b7b2-ea29bdb6" class="divtableactivitydata"><div class="formblockstdregactivity w-form"><form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" class="formstdregactivity" data-wf-page-id="65dafd64bada2318ea29bdb6" data-wf-element-id="4dea2756-75b1-1567-42b4-2c0d89a9ba96"><select id="activity" name="activity" data-name="activity" class="selectfieldstdregactivity w-select"></select></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div id="w-node-_4c500932-4a91-35eb-2cbd-6cf3a3177ad8-ea29bdb6" class="divtableactivitydata"><div class="divblockstdregdate"><input class="datePicker form-control"type="date"name="start-date"></div></div><div id="w-node-_7aa43335-4dc8-8047-8d63-c6d353b00acb-ea29bdb6" class="divtableactivitydata"><div class="divblockstdregdate"><input class="datePicker form-control"type="date"name="end-date"></div></div><div id="w-node-_174d3f4c-0b42-4afd-c639-2ebae3667c6b-ea29bdb6" class="divtableactivitydata"><div class="formblockstdregactivity w-form"><form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" class="formstdregactivity" data-wf-page-id="65dafd64bada2318ea29bdb6" data-wf-element-id="539a2873-4e88-b096-b8f5-d26197ef3a1d"><textarea placeholder="Example Text" maxlength="5000" id="description" name="description" data-name="description" class="textareastdregactivity w-input"></textarea></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div></div>';
+  }
+  $(function() {
+		$('.datePicker').datepicker({
+		    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+<!--		    startDate: '-10d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)-->
+<!--		    endDate: '+10d',	//달력에서 선택 할 수 있는 가장 느린 날짜. 이후로 선택 불가 ( d : 일 m : 달 y : 년 w : 주)-->
+		    autoclose : true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+		    calendarWeeks : false, //캘린더 옆에 몇 주차인지 보여주는 옵션 기본값 false 보여주려면 true
+		    clearBtn : false, //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
+<!--		    datesDisabled : [],//선택 불가능한 일 설정 하는 배열 위에 있는 format 과 형식이 같아야함.-->
+		    daysOfWeekDisabled : [],	//선택 불가능한 요일 설정 0 : 일요일 ~ 6 : 토요일
+		    daysOfWeekHighlighted : [], //강조 되어야 하는 요일 설정
+		    disableTouchKeyboard : false,	//모바일에서 플러그인 작동 여부 기본값 false 가 작동 true가 작동 안함.
+		    immediateUpdates: false,	//사용자가 보는 화면으로 바로바로 날짜를 변경할지 여부 기본값 :false
+		    multidate : false, //여러 날짜 선택할 수 있게 하는 옵션 기본값 :false
+		    multidateSeparator :",", //여러 날짜를 선택했을 때 사이에 나타나는 글짜 2019-05-01,2019-06-01
+		    templates : {
+		        leftArrow: '&laquo;',
+		        rightArrow: '&raquo;'
+		    }, //다음달 이전달로 넘어가는 화살표 모양 커스텀 마이징
+		    showWeekDays : true ,// 위에 요일 보여주는 옵션 기본값 : true
+		    title: "Calendar",	//캘린더 상단에 보여주는 타이틀
+		    todayHighlight : false ,	//오늘 날짜에 하이라이팅 기능 기본값 :false
+		    toggleActive : true,	//이미 선택된 날짜 선택하면 기본값 : false인경우 그대로 유지 true인 경우 날짜 삭제
+		    weekStart : 0 ,//달력 시작 요일 선택하는 것 기본값은 0인 일요일
+		    language : "en"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+
+		});//datepicker end
+	});//ready end
+<!--  https://stackoverflow.com/questions/26709969/call-javascript-function-onchange-event-of-dropdown-list-->
+    function doSomething(obj){
+
+<!--        console.log(obj.value);-->
+        let tmp = String(obj.value);
+        var category_id_list = {{category_id_list|safe}};
+        var activity_id_list = {{activity_id_list|safe}};
+        var activity_name_list = {{activity_name_list|safe}};
+
+        var full_text = `<div id="w-node-_89978e05-ed16-f28e-dbf6-6242b736b7b2-ea29bdb6" class="divtableactivitydata">
+            <div class="formblockstdregactivity w-form">
+              <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" class="formstdregactivity" data-wf-page-id="65dafd64bada2318ea29bdb6" data-wf-element-id="4dea2756-75b1-1567-42b4-2c0d89a9ba96">
+                <select id="activity" name="activity" data-name="activity" class="selectfieldstdregactivity w-select">`;
+
+<!--        console.log(category_id_list);-->
+
+        for (let i = 0; i < category_id_list.length; i++) {
+          if(obj.value==category_id_list[i]){
+<!--            console.log(i)-->
+            tmp_text='<option value="id">'.replace('id', String(activity_id_list[i]))+" name ".replace('name', String(activity_name_list[i]))+'</option>';
+<!--            console.log(tmp_text);-->
+            full_text = full_text+tmp_text;
+          }
+        }
+
+        full_text = full_text + `</select></form>
+              <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+              </div>
+              <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+              </div>
+            </div>
+          </div>`;
+<!--    console.log(full_text);-->
+
+
+    console.log(obj.parentElement.parentElement.parentElement.parentElement)
+    console.log(obj.parentElement.parentElement.parentElement.parentElement.children[2]);
+
+
+    obj.parentElement.parentElement.parentElement.children[2].innerHTML=full_text
+    };
+
+</script>

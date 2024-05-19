@@ -1,168 +1,186 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-
+<!DOCTYPE html><!--  This site was created in Webflow. https://www.webflow.com  -->
+<!--  Last Published: Sun Mar 03 2024 16:55:25 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="65dafd64bada2318ea29bdb6" data-wf-site="65dae9a8aed2bddc7d4faf42">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Management System</title>
-
-    <!-- Fontfamily -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&amp;display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
-    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
-    <style>
-        .col-sm-3 {
-            width: 30%;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>CounselorStudentRegistration</title>
+  <meta content="CounselorStudentRegistration" property="og:title">
+  <meta content="CounselorStudentRegistration" property="twitter:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  {% load static %}
+  <link href="{% static 'css/normalize.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/webflow.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/2024-ia-gyumin.webflow.css' %}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.css' %}">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Quicksand:300,regular,500,600,700"]  }});</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.png" rel="apple-touch-icon">
+  <script src="https://kit.fontawesome.com/16a5168267.js" crossorigin="anonymous"></script>
 </head>
-
-<body>
-
-    <!-- Main Wrapper -->
-    <div class="main-wrapper">
-
-        <!-- Header -->
-        <div class="header">
-            <div class="header-left">
-                <h3 style="transform: translateY(5px);">Management System</h3>
-            </div>
-        </div>
-        <!-- /Header -->
-
-        <!-- Page Wrapper -->
-        <div class="page-wrapper">
-            <div class="content container-fluid">
-                <div class="page-header">
-                    <div class="row align-items-center">
-                        <div class="col-sm-12">
-                            <div class="page-sub-header">
-                                <h3 class="page-title">Welcome, STUDENT NAME</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card comman-shadow">
-                            <div class="card-body">
-                                <form method="POST" action="{% url 'student-initial' %}" id="studentForm">
-                                    {% csrf_token %}
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h1 class="form-title student-info"
-                                                style="font-weight: 500; font-size: initial;"><b>Enter your details</b>
-                                            </h1>
-                                        </div>
-                                        <div class="col-12 col-sm-3">
-                                            <div class="form-group local-forms">
-                                                <label>Grade</label>
-                                                <select class="form-control select" name="grade">
-                                                    {% for grade, grade_label in GRADE_CHOICES %}
-                                                        <option value="{{ grade }}">{{ grade_label }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-3">
-                                            <div class="form-group local-forms">
-                                                <label>University</label>
-                                                <select class="form-control select" name="university">
-                                                    {% for uni in university %}
-                                                        <option value="{{uni.id}}">{{ uni.name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-3">
-                                            <div class="form-group local-forms">
-                                                <label>Major</label>
-                                                <select class="form-control select" name="major">
-                                                    {% for maj in major %}
-                                                        <option value="{{maj.id}}">{{ maj.name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="table-wrapper">
-                                            <div class="table-title">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <h3 class="form-title student-info"> + Add Additional Fields</h3>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <button type="button" class="btn btn-info" id="add_new_button" onclick="childrenRow()">Add New</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table id="student_edit_table"
-                                                    class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
-                                                    <thead class="student-thread">
-                                                        <tr>
-                                                            <th style="background: #d7d7d1;" data-field="number">No.</th>
-                                                            <th style="background: #d7d7d1;" data-field="category">Category</th>
-                                                            <th style="background: #d7d7d1;" data-field="activity">Activity</th>
-                                                            <th style="background: #d7d7d1;" data-field="startdate">Start Date</th>
-                                                            <th style="background: #d7d7d1;" data-field="enddate">End Date</th>
-                                                            <th style="background: #d7d7d1;" data-field="description">Description</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-8 col-sm-3">
-                                                <div class="student-submit">
-                                                    <a type="submit" class="btn btn-primary"
-                                                        href="{% url 'student-main' %}">Back</a>
-                                                </div>
-                                            </div>
-                                            <div class="col-8 col-sm-3">
-                                                <div class="student-submit">
-                                                    <button type="submit" class="btn btn-primary">Save</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Page Wrapper -->
-
+<body class="body">
+  <form method="POST">
+  {% csrf_token %}
+  <section class="sectionmaintitle">
+    <h1 class="headingmaintitle">               NLCS Pathfinder</h1>
+    <div id="w-node-_7971a765-2b38-3cf0-819b-f776e6380f95-ea29bdb6" class="divblocklogoutbuttonwrap">
+      <a href="{% url 'counselor-logout' %}" style="text-decoration:none"><img class="img-fluid" src="{% static 'img/logout.png' %}" alt="Logo"></a>
     </div>
-    <!-- /Main Wrapper -->
+  </section>
+  <section class="section-2">
+    <div class="w-layout-blockcontainer containerstdregheader w-container">
+      <div class="divstdregessentialheader">
+        <div id="w-node-f18b932d-7f52-d60e-bbf3-5157eddd1049-ea29bdb6" class="divstdregheaderleft">
+          <h1 class="headingstdregheaderleft">Student Registration</h1>
+        </div>
+        <div id="w-node-_99867401-9b1f-be79-e3d1-4157feefab60-ea29bdb6" class="divstdregheaderright">
+          <a class="divhousebutton" href="{% url 'counselor-main' %}" style="text-decoration:none"><img class="img-fluid" src="{% static 'img/home.png' %}" alt="Logo"></a>
+        </div>
+      </div>
+    </div>
+    <div class="w-layout-blockcontainer containeressentialinfo w-container">
+      <div class="divstdregessentialheader">
+        <h1 class="headingstdreg">Essential Info</h1>
+      </div>
+      <div class="divstdregessential">
+        <div id="w-node-_269b38ad-99d5-b89b-23b7-da884d1ed99b-ea29bdb6" class="divstdregessentialdata">
+          <div class="formblockstdregessential w-form">
 
-    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-    <script src="{% static 'plugins/select2/js/select2.min.js' %}"></script>
-    <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+              <label for="name" class="fieldformstdregessential">Name</label><input class="textfieldformstdregessentialname w-input" maxlength="256" name="name" data-name="name" placeholder="Enter name" type="text" id="name" required="">
 
+          </div>
+        </div>
+        <div id="w-node-_3045a05e-a66a-c9fb-6b54-cf8d857334d2-ea29bdb6" class="divstdregessentialdata">
+          <div class="formblockstdregessential w-form">
+            <label for="grade" class="fieldformstdregessential">Year</label>
+              <select id="grade" name="grade" data-name="grade" class="selectfieldstdregessential w-select">
+                {% for grade, grade_label in GRADE_CHOICES %}
+                        <option value="{{ grade }}">{{ grade_label }}</option>
+                {% endfor %}
+              </select>
 
+          </div>
+        </div>
+        <div id="w-node-_90908a03-8fd4-114a-bf5f-cfd299c0cb0b-ea29bdb6" class="divstdregessentialdata">
+          <div class="formblockstdregessential w-form">
+            <label for="university" class="fieldformstdregessential">Target University</label>
+              <select id="university" name="university" data-name="university" class="selectfieldstdregessential w-select">
+                {% for uni in university %}
+                        <option value="{{uni.id}}">{{ uni.name }}</option>
+                {% endfor %}
+              </select>
+
+          </div>
+        </div>
+        <div id="w-node-_3380f3ed-d1ce-44b8-83df-e00a35e00cad-ea29bdb6" class="divstdregessentialdata">
+          <div class="formblockstdregessential w-form">
+
+              <label for="major" class="fieldformstdregessential">Target Major</label>
+              <select id="major" name="major" data-name="major" class="selectfieldstdregessential w-select">
+                {% for maj in major %}
+                        <option value="{{maj.id}}">{{ maj.name }}</option>
+                {% endfor %}
+              </select>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-layout-blockcontainer containerstdregactivity w-container">
+      <div class="divstdregactivitiesheader">
+        <h1 class="headingstdreg">Activities</h1>
+        <div id="w-node-_4330c938-e16f-12dc-a76f-f8670c664afa-ea29bdb6" class="divstdregactivitiesbutton">
+          <a onclick="childrenRow()" style="text-decoration:none; cursor:pointer">+Add</a>
+        </div>
+      </div>
+      <div id="student_edit_table" class="divtableactivitytable">
+        <div id="w-node-_67ce2733-f305-31b2-f15f-10a5a91fe9aa-ea29bdb6" class="divtableactivityheaderrow">
+          <div id="w-node-cf370158-e546-3441-ffe0-6c4fa484b8b1-ea29bdb6" class="divtableactivityheader">No.</div>
+          <div id="w-node-e06b81cd-ba85-55b8-9b0d-b3d87825d772-ea29bdb6" class="divtableactivityheader">Category</div>
+          <div id="w-node-bb5e6395-51e4-5298-146c-524bc37f5fd3-ea29bdb6" class="divtableactivityheader">Activity</div>
+          <div id="w-node-_41e9e996-4989-9903-5743-0cad7c0a8549-ea29bdb6" class="divtableactivityheader">Start Date</div>
+          <div id="w-node-a4b469c9-2227-d922-c9b4-0e376d232fbc-ea29bdb6" class="divtableactivityheader">End Date</div>
+          <div id="w-node-d5472d1d-0c38-c560-6578-ceae36d086ff-ea29bdb6" class="divtableactivityheader">Description</div>
+        </div>
+        <div id="w-node-d00705c6-8653-bff0-ba57-7f0d286aa5f1-ea29bdb6" class="divtableactivitydatarow">
+          <div id="w-node-_179c3a27-b557-71e4-c74d-f36f7d2376ff-ea29bdb6" class="divtableactivitydata">1</div>
+          <div id="w-node-_78070132-824c-3a9f-6144-c948126de6db-ea29bdb6" class="divtableactivitydata">
+            <div class="formblockstdregactivity w-form">
+
+                <select id="category" name="category" data-name="category" class="selectfieldstdregactivity w-select" onchange="doSomething(this);">
+                  {% for cat in category %}
+                      <option value="{{cat.id}}">{{ cat.name }}</option>
+                  {% endfor %}
+                </select>
+
+            </div>
+          </div>
+          <div id="w-node-_89978e05-ed16-f28e-dbf6-6242b736b7b2-ea29bdb6" class="divtableactivitydata">
+            <div class="formblockstdregactivity w-form">
+                <select id="activity" name="activity" data-name="activity" class="selectfieldstdregactivity w-select">
+
+                </select>
+
+            </div>
+          </div>
+          <div id="w-node-_4c500932-4a91-35eb-2cbd-6cf3a3177ad8-ea29bdb6" class="divtableactivitydata">
+            <div class="divblockstdregdate">
+              <input
+                  class="datePicker form-control"
+
+                  type="date"
+                  name="start-date"
+              >
+            </div>
+          </div>
+          <div id="w-node-_7aa43335-4dc8-8047-8d63-c6d353b00acb-ea29bdb6" class="divtableactivitydata">
+            <div class="divblockstdregdate">
+              <input
+                  class="datePicker form-control"
+
+                  type="date"
+                  name="end-date"
+              >
+            </div>
+          </div>
+          <div id="w-node-_174d3f4c-0b42-4afd-c639-2ebae3667c6b-ea29bdb6" class="divtableactivitydata">
+            <div class="formblockstdregactivity w-form">
+                <textarea placeholder="Enter description" maxlength="5000" id="description" name="description" data-name="description" class="textareastdregactivity w-input"></textarea>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sectionstdregfooter">
+    <div class="w-layout-blockcontainer containerstdregfooter w-container">
+      <button type="submit" name="save" class="divblockstdregfooterbutton">Save</button>
+    </div>
+  </section>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=65dae9a8aed2bddc7d4faf42" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="{% static 'js/webflow.js' %}" type="text/javascript"></script>
+  </form>
 </body>
-
 </html>
 <script>
-  var tableObj = document.getElementById("student_edit_table");
-  var tableLength = tableObj.rows.length;
-  console.log(tableLength);
+  var tableObj = document.getElementsByClassName("divtableactivitytable");
+
+<!--  let data = {{ search_list | safe }};-->
   function childrenRow() {
-  $('#student_edit_table').find('tbody').append('<tr><th scope="row">'+tableLength+'</th><td><div class="form-group local-forms"><select class="form-control select" onchange="doSomething(this);" name="category">{% for cat in category %}<option value="{{cat.id}}">{{ cat.name }}</option>{% endfor %}</select></div></td><td><div class="form-group local-forms"><select class="form-control select" name="activity">{% for act in activity %}<option value="{{act.id}}">{{ act.name }}</option>{% endfor %}</select></div></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="start-date"></td><td><input class="form-control datetimepicker" type="date"placeholder="YYYY-MM-DD" name="end-date"></td><td><textarea class="form-control"name="description"></textarea></td></tr>'
-  );
+
+  var tableLength = document.getElementsByClassName("divtableactivitydatarow").length;
+  var newRowNum =tableLength +1;
+  console.log(tableLength);
+  const tmp = document.createElement("div");
+  tmp.innerHTML = '<div id="w-node-d00705c6-8653-bff0-ba57-7f0d286aa5f1-ea29bdb6" class="divtableactivitydatarow"><div id="w-node-_179c3a27-b557-71e4-c74d-f36f7d2376ff-ea29bdb6" class="divtableactivitydata">'+newRowNum+'</div><div id="w-node-_78070132-824c-3a9f-6144-c948126de6db-ea29bdb6" class="divtableactivitydata"><div class="formblockstdregactivity w-form"><select id="category" name="category" data-name="category" class="selectfieldstdregactivity w-select" onchange="doSomething(this);">{% for cat in category %}<option value="{{cat.id}}">{{ cat.name }}</option>{% endfor %}</select><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div id="w-node-_89978e05-ed16-f28e-dbf6-6242b736b7b2-ea29bdb6" class="divtableactivitydata"><div class="formblockstdregactivity w-form"><form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" class="formstdregactivity" data-wf-page-id="65dafd64bada2318ea29bdb6" data-wf-element-id="4dea2756-75b1-1567-42b4-2c0d89a9ba96"><select id="activity" name="activity" data-name="activity" class="selectfieldstdregactivity w-select"></select></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div id="w-node-_4c500932-4a91-35eb-2cbd-6cf3a3177ad8-ea29bdb6" class="divtableactivitydata"><div class="divblockstdregdate"><input class="datePicker form-control"type="date"name="start-date"></div></div><div id="w-node-_7aa43335-4dc8-8047-8d63-c6d353b00acb-ea29bdb6" class="divtableactivitydata"><div class="divblockstdregdate"><input class="datePicker form-control"type="date"name="end-date"></div></div><div id="w-node-_174d3f4c-0b42-4afd-c639-2ebae3667c6b-ea29bdb6" class="divtableactivitydata"><div class="formblockstdregactivity w-form"><textarea placeholder="Enter description" maxlength="5000" id="description" name="description" data-name="description" class="textareastdregactivity w-input"></textarea><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div></div>';
+  document.getElementsByClassName("divtableactivitytable")[0].append(tmp);
   }
   $(function() {
 		$('.datePicker').datepicker({
@@ -192,40 +210,48 @@
 
 		});//datepicker end
 	});//ready end
+<!--  https://stackoverflow.com/questions/26709969/call-javascript-function-onchange-event-of-dropdown-list-->
+    function doSomething(obj){
 
-	function doSomething(obj){
-
-        console.log(obj.value);
+<!--        console.log(obj.value);-->
         let tmp = String(obj.value);
         var category_id_list = {{category_id_list|safe}};
         var activity_id_list = {{activity_id_list|safe}};
         var activity_name_list = {{activity_name_list|safe}};
 
-        var full_text = `<td>
-    <div class="form-group local-forms">
-        <select class="form-control select" name="activity">`;
+        var full_text = `<div id="w-node-_89978e05-ed16-f28e-dbf6-6242b736b7b2-ea29bdb6" class="divtableactivitydata">
+            <div class="formblockstdregactivity w-form">
+              <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" class="formstdregactivity" data-wf-page-id="65dafd64bada2318ea29bdb6" data-wf-element-id="4dea2756-75b1-1567-42b4-2c0d89a9ba96">
+                <select id="activity" name="activity" data-name="activity" class="selectfieldstdregactivity w-select">`;
 
-        console.log(category_id_list);
+<!--        console.log(category_id_list);-->
 
         for (let i = 0; i < category_id_list.length; i++) {
           if(obj.value==category_id_list[i]){
-            console.log(i)
+<!--            console.log(i)-->
             tmp_text='<option value="id">'.replace('id', String(activity_id_list[i]))+" name ".replace('name', String(activity_name_list[i]))+'</option>';
-            console.log(tmp_text);
+<!--            console.log(tmp_text);-->
             full_text = full_text+tmp_text;
           }
         }
 
-        full_text = full_text + `</select>
-    </div>
-</td>`;
-    console.log(full_text);
+        full_text = full_text + `</select></form>
+              <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+              </div>
+              <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+              </div>
+            </div>
+          </div>`;
+<!--    console.log(full_text);-->
 
 
-
-
+    console.log(obj.parentElement.parentElement.parentElement.parentElement)
+    console.log(obj.parentElement.parentElement.parentElement.parentElement.children[2]);
 
 
     obj.parentElement.parentElement.parentElement.children[2].innerHTML=full_text
     };
+
 </script>

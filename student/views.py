@@ -80,6 +80,8 @@ def student_initial(request):
     university = University.objects.all()
     category = Category.objects.all()
     activity = Activity.objects.all()
+    category_activity_tuples = [(category, category.activity_set.all()) for category in category]
+
 
     category_id_list = []
     activity_id_list = []
@@ -93,60 +95,66 @@ def student_initial(request):
     # Assuming the user is already authenticated
     user_instance = request.user
 
-    if Student.objects.filter(user=user_instance).exists():
-        messages.warning(request, "You have already completed the registration.")
-        return redirect('student-main')
+    # if Student.objects.filter(user=user_instance).exists():
+    #     messages.warning(request, "You have already completed the registration.")
+    #     return redirect('student-main')
 
     if request.method == 'POST':
-        grade = request.POST.get('grade')
-        university_id = request.POST.get('university')
-        major_id = request.POST.get('major')
-        category_id_list = request.POST.getlist('category')
-        activity_id_list = request.POST.getlist('activity')
-        start_date_list = request.POST.getlist('start-date')
-        end_date_list = request.POST.getlist('end-date')
-        description_list = request.POST.getlist('description')
+        if 'save' in request.POST:
+            name = request.POST.get('name')
+            grade = request.POST.get('grade')
+            university_id = request.POST.get('university')
+            major_id = request.POST.get('major')
+            category_id_list = request.POST.getlist('category')
+            activity_id_list = request.POST.getlist('activity')
+            start_date_list = request.POST.getlist('start-date')
+            end_date_list = request.POST.getlist('end-date')
+            description_list = request.POST.getlist('description')
 
-        if not all([grade, university_id, major_id]):
-            messages.error(request, "Please fill out all the required fields!")
-            return redirect('student-initial')
+            if not all([grade, university_id, major_id]):
+                messages.error(request, "Please fill out all the required fields!")
+                return redirect('student-initial')
 
-        student = Student(user=user_instance,
-                          grade=grade,
-                          university=get_object_or_404(University, id=university_id),
-                          major=get_object_or_404(Major, id=major_id),
-                          )
-        student.save()
+            if None in category_id_list or None in activity_id_list or None in start_date_list or None in end_date_list or None in description_list:
+                messages.error(request, "Please fill out all the activities' fields!")
+                return redirect('student-initial')
 
-        # add new activity experiences
-        for idx in range(len(category_id_list)):
-            curr_category = get_object_or_404(Category, id=category_id_list[idx])
-            curr_activity = get_object_or_404(Activity, id=activity_id_list[idx])
-            curr_start_date = start_date_list[idx]
-            curr_end_date = end_date_list[idx]
-            curr_description = description_list[idx]
-            # print(curr_category)
-            # print(curr_activity)
-            # print(curr_start_date)
-            # print(curr_end_date)
-            # print(curr_description)
+            student = Student(name=name,
+                              grade=grade,
+                              university=get_object_or_404(University, id=university_id),
+                              major=get_object_or_404(Major, id=major_id),
+                              )
+            student.save()
 
-            ae = ActivityExperience(
-                student=student,
-                category=curr_category,
-                activity=curr_activity,
-                start_date=curr_start_date,
-                end_date=curr_end_date,
-                description=curr_description,
-            )
-            # student = Student(user=user_instance, grade=grade, university=university_instance, major=major_instance,
-            #                   category=cat_instance, start_date=startdate, end_date=enddate, description=description)
-            ae.save()
+            # add new activity experiences
+            for idx in range(len(category_id_list)):
+                curr_category = get_object_or_404(Category, id=category_id_list[idx])
+                curr_activity = get_object_or_404(Activity, id=activity_id_list[idx])
+                curr_start_date = start_date_list[idx]
+                curr_end_date = end_date_list[idx]
+                curr_description = description_list[idx]
+                # print(curr_category)
+                # print(curr_activity)
+                # print(curr_start_date)
+                # print(curr_end_date)
+                # print(curr_description)
+
+                ae = ActivityExperience(
+                    student=student,
+                    category=curr_category,
+                    activity=curr_activity,
+                    start_date=curr_start_date,
+                    end_date=curr_end_date,
+                    description=curr_description,
+                )
+                # student = Student(user=user_instance, grade=grade, university=university_instance, major=major_instance,
+                #                   category=cat_instance, start_date=startdate, end_date=enddate, description=description)
+                ae.save()
 
 
 
-        messages.success(request, "Registration Successful!")
-        return redirect('student-main')
+            messages.success(request, "Registration Successful!")
+            return redirect('counselor-main')
 
     context = {
         'major': major,
@@ -157,6 +165,7 @@ def student_initial(request):
         'category_id_list': json.dumps(category_id_list),
         'activity_id_list': json.dumps(activity_id_list),
         'activity_name_list': json.dumps(activity_name_list),
+        'category_activity_tuples': category_activity_tuples,
     }
     return render(request, 'student_initial.html', context)
 

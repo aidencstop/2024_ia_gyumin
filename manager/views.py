@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .models import *;
+from student.models import Student
 
 # Create your views here.
 
@@ -68,6 +69,82 @@ def manager_main(request):
         'nameuser' : nameuser
     }
     return render(request, 'manager_main.html', context)
+
+# View function for adding a new counselor
+@login_required
+def manager_addcounselor(request):
+    if request.method == 'POST':
+        # Retrieve form data
+        username = request.POST.get('user-username')
+        password = request.POST.get('user-password')
+        confirm_password = request.POST.get('user-confirm-password')
+        name = request.POST.get('user-name')
+
+        # Check if username already exists
+        if CustomUser.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists!")
+            return redirect('manager-addcounselor')
+
+        # Check if all required fields are filled
+        if not all([username, password, confirm_password, name]):
+            messages.error(request, "Please fill out all the required fields!")
+            return redirect('manager-addcounselor')
+
+        # Check if password matches confirm password
+        if password == confirm_password:
+            # Hash password and create new user
+            hashed_password = make_password(password)
+            new_user = CustomUser(username=username, password=hashed_password, name=name, role='counselor')
+            new_user.save()
+            messages.success(request, "User added successfully!")
+            return redirect('manager-addcounselor')
+
+        else:
+            messages.error(request, "Password doesn't match. Please try again!")
+            return redirect('manager-addcounselor')
+
+    return render(request, 'manager_addcounselor.html', {})
+
+
+@login_required
+def manager_counselorlist(request):
+    if request.method == 'POST':
+        if 'ok' in request.POST:
+            del_pk = request.POST.get('ok')
+            del_counselor = CustomUser.objects.get(pk=del_pk)
+            del_counselor.is_active = False
+            del_counselor.save()
+            return redirect('manager-counselorlist')
+
+
+    counselors = CustomUser.objects.filter(role='counselor', is_active=True)
+    for c in counselors:
+        print(c.name)
+    counselor_pk_list = [c.pk for c in counselors]
+    print(counselor_pk_list)
+    context = {
+        'counselors': counselors,
+        'counselor_pk_list': counselor_pk_list,
+    }
+    return render(request, 'manager_counselorlist.html', context)
+
+@login_required
+def manager_studentlist(request):
+    if request.method == 'POST':
+        if 'ok' in request.POST:
+            del_pk = request.POST.get('ok')
+            del_student = Student.objects.get(pk=del_pk)
+            del_student.is_active = False
+            del_student.save()
+            return redirect('manager-studentlist')
+    students = Student.objects.filter(is_active=True)
+    student_pk_list = [s.pk for s in students]
+    print(student_pk_list)
+    context = {
+        'students': students,
+        'student_pk_list': student_pk_list,
+    }
+    return render(request, 'manager_studentlist.html', context)
 
 # View function for adding a new user
 @login_required
