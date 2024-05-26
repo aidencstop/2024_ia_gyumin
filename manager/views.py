@@ -126,7 +126,7 @@ def manager_counselorlist(request):
         'counselors': counselors,
         'counselor_pk_list': counselor_pk_list,
     }
-    return render(request, 'manager_counselorlist.html', context)
+    return render(request, 'manager_manageuserscounselor.html', context)
 
 @login_required
 def manager_studentlist(request):
@@ -144,7 +144,7 @@ def manager_studentlist(request):
         'students': students,
         'student_pk_list': student_pk_list,
     }
-    return render(request, 'manager_studentlist.html', context)
+    return render(request, 'manager_manageusersstudent.html', context)
 
 # View function for adding a new user
 @login_required
@@ -212,7 +212,7 @@ def manager_managecatact(request):
     categories = Category.objects.all()
     category_activity_tuples = []
     for category in categories:
-        activities = Activity.objects.filter(category=category)
+        activities = Activity.objects.filter(category=category, is_active=True)
         category_activity_tuples.append((category, activities))
     print(category_activity_tuples)
 
@@ -312,3 +312,47 @@ class Delete_user(View):
             user = CustomUser.objects.get(pk=id)
             user.delete()
         return redirect('manager-manageusers')
+
+@login_required
+def manager_deletecounselor(request, id):
+    del_counselor = CustomUser.objects.get(pk=id)
+    del_counselor.is_active = False
+    del_counselor.save()
+    return redirect('manager-counselorlist')
+
+@login_required
+def manager_deletestudent(request, id):
+    del_student = Student.objects.get(pk=id)
+    del_student.is_active = False
+    del_student.save()
+    return redirect('manager-studentlist')
+
+@login_required
+def manager_deleteactivity(request, id):
+    del_activity = Activity.objects.get(pk=id)
+    del_activity.is_active = False
+    del_activity.save()
+    return redirect('manager-managecatact')
+
+@login_required
+def manager_editactivity(request, id):
+    if request.method == 'POST':
+        new_activity_name = request.POST.get('new_name')
+        activity = Activity.objects.get(pk=id)
+        activity.name = new_activity_name
+        activity.save()
+        return redirect('manager-managecatact')
+    activity = Activity.objects.get(pk=id)
+    return render(request, 'manager_editactivity.html', {'activity': activity})
+
+@login_required
+def manager_addactivity(request):
+    if request.method == 'POST':
+        category_id = request.POST.get('category')
+        category = Category.objects.get(pk=category_id)
+        new_activity_name = request.POST.get('new_name')
+        activity = Activity(name=new_activity_name, category=category)
+        activity.save()
+        return redirect('manager-managecatact')
+    categories = Category.objects.all()
+    return render(request, 'manager_addactivity.html', {'categories': categories})

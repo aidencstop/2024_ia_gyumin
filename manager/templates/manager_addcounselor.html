@@ -26,7 +26,9 @@
 {% csrf_token %}
   <section class="sectionmaintitle">
     <h1 class="headingmaintitle">                NLCS Pathfinder</h1>
-    <div id="w-node-_2023bfef-af6c-250f-022c-435221c5dc0c-dc3d80dc" class="divblocklogoutbuttonwrap"><a href="{% url 'manager-logout' %}" style="text-decoration:none"><img class="img-fluid" src="{% static 'img/logout.png' %}" alt="Logo"></a></div>
+    <div id="w-node-_2023bfef-af6c-250f-022c-435221c5dc0c-dc3d80dc" class="divblocklogoutbuttonwrap">
+      <a href="{% url 'manager-logout' %}" style="text-decoration:none"><img class="img-fluid" src="{% static 'img/logout.png' %}" alt="Logo"></a>
+    </div>
   </section>
   <section class="sectioncounselorstdregfirst">
     <div class="w-layout-blockcontainer containerstdregheader w-container">
@@ -44,13 +46,13 @@
         <div id="w-node-b5b1994c-c926-57f1-5863-3dc9259f4542-dc3d80dc" class="divaddcslessentialdata">
           <div class="formblockaddcslessential w-form">
             <label for="name-3" class="fieldformaddcslessential">Name</label>
-            <input class="textfieldformaddcslessentialname w-input" maxlength="256" name="user-name" data-name="name" placeholder="Enter name" type="text" id="name-3" required="">
+            <input class="textfieldformaddcslessentialname w-input" autofocus="true" maxlength="256" name="user-name" data-name="name" placeholder="Enter name" type="text" id="name-3" required="">
           </div>
         </div>
         <div id="w-node-_269b38ad-99d5-b89b-23b7-da884d1ed99b-dc3d80dc" class="divaddcslessentialdata">
           <div class="formblockaddcslessential w-form">
             <label for="id" class="fieldformaddcslessential">ID</label>
-            <input class="textfieldformaddcslessentialname w-input" autofocus="true" maxlength="256" name="user-username" data-name="id" placeholder="Enter ID" type="text" id="id" required="">
+            <input class="textfieldformaddcslessentialname w-input" maxlength="256" name="user-username" data-name="id" placeholder="Enter ID" type="text" id="id" required="">
           </div>
         </div>
         <div id="w-node-_83b70c29-2090-b010-d704-ae9ce5b26692-dc3d80dc" class="divaddcslessentialdata">

@@ -25,6 +25,7 @@ class Category(models.Model):
 class Activity(models.Model):
     name = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

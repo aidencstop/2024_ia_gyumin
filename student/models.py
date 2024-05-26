@@ -31,6 +31,12 @@ class Student(models.Model):
     # start_date = models.DateField(null=True, blank=True)
     # end_date = models.DateField(null=True, blank=True)
     # description = models.TextField(max_length=250, null = True)
+    ib_subject = models.TextField(max_length=60, null=True)
+    ib_ia_title = models.TextField(max_length=250, null=True)
+    strength = models.TextField(max_length=5000, null=True)
+    weakness = models.TextField(max_length=5000, null=True)
+    recommendation = models.TextField(max_length=5000, null=True)
+
     is_active = models.BooleanField(default=True)
 
     def __str__(self):

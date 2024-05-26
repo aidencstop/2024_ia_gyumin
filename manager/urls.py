@@ -24,5 +24,10 @@ urlpatterns = [
     path('manager-deleteuni/', views.Delete_uni.as_view(), name='manager-deleteuni'),
     path('manager-deletemajor/', views.Delete_major.as_view(), name='manager-deletemajor'),
     path('manager-deletecatact/', views.Delete_catact.as_view(), name='manager-deletecatact'),
-    path('manager-deleteuser/', views.Delete_user.as_view(), name='manager-deleteuser'),
+    # path('manager-deleteuser/', views.Delete_user.as_view(), name='manager-deleteuser'),
+    path('manager-deletecounselor/<int:id>/', views.manager_deletecounselor, name='manager-deletecounselor'),
+    path('manager-deletestudent/<int:id>/', views.manager_deletestudent, name='manager-deletestudent'),
+    path('manager-deleteactivity/<int:id>/', views.manager_deleteactivity, name='manager-deleteactivity'),
+    path('manager-editactivity/<int:id>/', views.manager_editactivity, name='manager-editactivity'),
+    path('manager-addactivity/', views.manager_addactivity, name='manager-addactivity'),
 ]
