@@ -29,18 +29,20 @@ https://docs.google.com/presentation/d/1p54yTDn5n0fd7MVA2j8KRug5J1s2IOuUo_6Y70Cb
     <div class="w-layout-blockcontainer container w-container">
       <h1 class="headinglandingpagemain">Welcome!</h1>
       <div class="divmainrowgrid">
-        <div id="w-node-_0b81af3d-466f-3cf2-7708-397040642583-7d4faf48" class="divmaincolumngrid">
+        <button id="w-node-_0b81af3d-466f-3cf2-7708-397040642583-7d4faf48" class="divmaincolumngrid" onclick="location.href={% url 'manager-login' %}" style="background-color: transparent;">
           <div id="w-node-_9eb4e252-50c6-270e-06e3-3500241562f5-7d4faf48" class="divmainimage">
             <img class="img-fluid" src="{% static 'img/admin.png' %}" alt="Logo">
           </div>
-          <a href="{% url 'manager-login' %}" style="text-decoration:none"><h1 class="divmainselect">Admin</h1></a>
-        </div>
-        <div id="w-node-fb5edaf7-fccd-61d1-7aa4-29afc6feeeac-7d4faf48" class="divmaincolumngrid">
+<!--          <a href="{% url 'manager-login' %}" style="text-decoration:none"><h1 class="divmainselect">Admin</h1></a>-->
+          <h1 class="divmainselect">Admin</h1>
+        </button>
+        <button id="w-node-fb5edaf7-fccd-61d1-7aa4-29afc6feeeac-7d4faf48" class="divmaincolumngrid" onclick="location.href={% url 'counselor-login' %}" style="background-color: transparent;">
           <div id="w-node-fb5edaf7-fccd-61d1-7aa4-29afc6feeead-7d4faf48" class="divmainimage">
             <img class="img-fluid" src="{% static 'img/counselor.png' %}" alt="Logo">
           </div>
-          <a href="{% url 'counselor-login' %}" style="text-decoration:none"><h1 class="divmainselect">Counselor</h1></a>
-        </div>
+<!--          <a href="{% url 'counselor-login' %}" style="text-decoration:none"><h1 class="divmainselect">Counselor</h1></a>-->
+          <h1 class="divmainselect">Counselor</h1>
+        </button>
       </div>
       <h1 class="headinglandingpagefooter">※ If you wish to login as a counselor, make sure the admin has set up your account first.</h1>
     </div>

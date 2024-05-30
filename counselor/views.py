@@ -75,6 +75,9 @@ def counselor_main(request):
         'nameuser' : nameuser,
     }
     return render(request, 'counselor_main.html', context)
+@login_required
+def counselor_checkstudents_default(request):
+    return redirect('counselor-checkstudents', 0)
 
 # View function for checking students
 @login_required
@@ -107,7 +110,6 @@ def counselor_editstudents(request, id):
 
     # Get existing record of the student
     existing_activity_experiences = ActivityExperience.objects.filter(student=student_instance).order_by('pk')
-
 
     major = Major.objects.all()
     university = University.objects.all()
@@ -333,7 +335,7 @@ def counselor_editstudents(request, id):
 
             recommendation = recommendation_chat_completion.choices[0].message.content.strip("\"")
 
-            print(total_query)
+            # print(total_query)
 
             total_chat_completion = client.chat.completions.create(
                 messages=[

@@ -53,38 +53,45 @@
           <div class="form-block w-form">
             <form id="email-form" name="email-form" data-name="Email Form" method="get" data-wf-page-id="65db4546ff2046f1c13b438c" data-wf-element-id="62d8a4b0-fd6a-edcc-e17c-18945199994b">
               <select id="field" name="field" data-name="Field" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" class="selectfieldstdlistfilter w-select">
-                {% if year == 0 %}
-                <option value="{% url 'counselor-checkstudents' 0 %}">All</option>
-                {% endif %}
-                {% if year == 10 %}
-                <option value="{% url 'counselor-checkstudents' 10 %}">Year 10</option>
-                {% endif %}
-                {% if year == 11 %}
-                <option value="{% url 'counselor-checkstudents' 11 %}">Year 11</option>
-                {% endif %}
-                {% if year == 12 %}
-                <option value="{% url 'counselor-checkstudents' 12 %}">Year 12</option>
-                {% endif %}
-                {% if year == 13 %}
-                <option value="{% url 'counselor-checkstudents' 13 %}">Year 13</option>
-                {% endif %}
+<!--                {% if year == 0 %}-->
+<!--                <option selected value="{% url 'counselor-checkstudents' 0 %}">All</option>-->
+<!--                {% endif %}-->
+<!--                {% if year == 10 %}-->
+<!--                <option selected value="{% url 'counselor-checkstudents' 10 %}">Year 10</option>-->
+<!--                {% endif %}-->
+<!--                {% if year == 11 %}-->
+<!--                <option selected value="{% url 'counselor-checkstudents' 11 %}">Year 11</option>-->
+<!--                {% endif %}-->
+<!--                {% if year == 12 %}-->
+<!--                <option selected value="{% url 'counselor-checkstudents' 12 %}">Year 12</option>-->
+<!--                {% endif %}-->
+<!--                {% if year == 13 %}-->
+<!--                <option selected value="{% url 'counselor-checkstudents' 13 %}">Year 13</option>-->
+<!--                {% endif %}-->
                 {% for y in year_list %}
+
                 {% if y == year %}
+                {% if y == 0 %}
+                <option value="{% url 'counselor-checkstudents' 0 %}" selected>All</option>
+                {% else %}
+                <option value="{% url 'counselor-checkstudents' y %}" selected>Year {{ y }}</option>
+                {% endif %}
+
                 {% else %}
                 {% if y == 0 %}
-                {% if year != 0 %}
                 <option value="{% url 'counselor-checkstudents' 0 %}">All</option>
-                {% endif %}
                 {% else %}
                 <option value="{% url 'counselor-checkstudents' y %}">Year {{ y }}</option>
                 {% endif %}
+
                 {% endif %}
+                {% endfor %}
 <!--                <option value="{% url 'counselor-checkstudents' 0 %}">All</option>-->
 <!--                <option value="{% url 'counselor-checkstudents' 10 %}">Year 10</option>-->
 <!--                <option value="{% url 'counselor-checkstudents' 11 %}">Year 11</option>-->
-
+<!--                <option value="{% url 'counselor-checkstudents' 12 %}">Year 12</option>-->
 <!--                <option value="{% url 'counselor-checkstudents' 13 %}">Year 13</option>-->
-                {% endfor %}
+
               </select>
             </form>
           </div>

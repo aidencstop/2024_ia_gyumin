@@ -21,10 +21,9 @@
   <link href="images/webclip.png" rel="apple-touch-icon">
 </head>
 <body class="body">
-<form action="{% url 'manager-main' %}" method="POST">
-{% csrf_token %}
+
   <section class="sectionmaintitle">
-    <h1 class="headingmaintitle">                NLCS Pathfinder</h1>
+    <h1 class="headingmaintitle">                    NLCS Pathfinder</h1>
     <div id="w-node-d2daa522-833e-3a5c-a043-483bea9c1fed-dc3c8bde" class="divblocklogoutbuttonwrap">
       <a href="{% url 'manager-logout' %}" style="text-decoration:none"><img class="img-fluid" src="{% static 'img/logout.png' %}" alt="Logo"></a>
     </div>
@@ -33,29 +32,32 @@
     <div class="w-layout-blockcontainer containeradminmaingrid w-container">
       <h1 class="headingadminmain">Admin Menu</h1>
       <div class="divadminmainrowgrid">
-        <div id="w-node-fb5edaf7-fccd-61d1-7aa4-29afc6feeeac-dc3c8bde" class="divmaincolumncell">
+        <button id="w-node-fb5edaf7-fccd-61d1-7aa4-29afc6feeeac-dc3c8bde" class="divmaincolumncell" onclick="location.href={% url 'manager-addcounselor' %}" style="background-color: transparent;">
           <div id="w-node-fb5edaf7-fccd-61d1-7aa4-29afc6feeead-dc3c8bde" class="divmainimage">
             <img class="img-fluid" src="{% static 'img/add_counselor.png' %}" alt="Logo">
           </div>
-          <a href="{% url 'manager-addcounselor' %}" style="text-decoration:none"><h1 class="divmaincolumntext">Add Counselor</h1></a>
-        </div>
+<!--          <a href="{% url 'manager-addcounselor' %}" style="text-decoration:none"><h1 class="divmaincolumntext">Add Counselor</h1></a>-->
+          <h1 class="divmaincolumntext">Add Counselor</h1>
+        </button>
         <div id="w-node-d27924dd-c26f-50cc-d215-a28d263d6d6b-dc3c8bde" class="divblockadminmaincolumngrid">
-          <div id="w-node-_05dde927-a2f9-901f-72f9-7adbf146123e-dc3c8bde" class="divblockadminmaincolumngridcell">
+          <button id="w-node-_05dde927-a2f9-901f-72f9-7adbf146123e-dc3c8bde" class="divblockadminmaincolumngridcell" onclick="location.href={% url 'manager-counselorlist' %}" style="background-color: transparent;">
             <div id="w-node-fead5b1e-1897-c117-08c4-c224e30daaec-dc3c8bde" class="divblockadminmaincgctext">
-              <a href="{% url 'manager-counselorlist' %}" style="text-decoration:none"><h1 class="headingcgctext">Manage Users</h1></a>
+<!--              <a href="{% url 'manager-counselorlist' %}" style="text-decoration:none"><h1 class="headingcgctext">Manage Users</h1></a>-->
+              <h1 class="headingcgctext">Manage Users</h1>
             </div>
             <div id="w-node-_4dba2a38-5736-e8a5-0930-7157cbc60ddf-dc3c8bde" class="divblockadminmaincgcimage">
               <img class="img-fluid" src="{% static 'img/manage_users.png' %}" alt="Logo">
             </div>
-          </div>
-          <div id="w-node-ff30bd67-2a6c-628f-51cb-504c8a921b2b-dc3c8bde" class="divblockadminmaincolumngridcell">
+          </button>
+          <button id="w-node-ff30bd67-2a6c-628f-51cb-504c8a921b2b-dc3c8bde" class="divblockadminmaincolumngridcell" onclick="location.href={% url 'manager-managecatact' %}" style="background-color: transparent;">
             <div id="w-node-ff30bd67-2a6c-628f-51cb-504c8a921b2c-dc3c8bde" class="divblockadminmaincgctext">
-              <a href="{% url 'manager-managecatact' %}" style="text-decoration:none"><h1 class="headingcgctext">Manage Categories</h1></a>
+<!--              <a href="{% url 'manager-managecatact' %}" style="text-decoration:none"><h1 class="headingcgctext">Manage Users</h1></a>-->
+              <h1 class="headingcgctext">Manage Activities</h1>
             </div>
             <div id="w-node-ff30bd67-2a6c-628f-51cb-504c8a921b31-dc3c8bde" class="divblockadminmaincgcimage">
               <img class="img-fluid" src="{% static 'img/manage_categories.png' %}" alt="Logo">
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </div>

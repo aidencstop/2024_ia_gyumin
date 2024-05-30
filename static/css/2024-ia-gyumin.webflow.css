@@ -57,11 +57,11 @@ a {
   margin-top: 0;
   margin-bottom: 0;
   font-family: Quicksand, sans-serif;
-  font-size: 38px;
+  font-size: 30px;
 }
 
 .headingmaintitle.headingladn {
-  font-size: 38px;
+  font-size: 30px;
 }
 
 .section-2 {
@@ -71,7 +71,6 @@ a {
   grid-template-columns: 1fr;
   grid-auto-columns: 1fr;
   height: 90%;
-  padding-bottom: 40px;
   display: block;
 }
 
@@ -79,7 +78,7 @@ a {
   text-align: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 10%;
+  margin-top: 5%;
   margin-bottom: 10%;
   display: flex;
   position: relative;
@@ -91,6 +90,7 @@ a {
 
 .headinglandingpagemain {
   color: #343f51;
+  margin-bottom: 60px;
   font-family: Quicksand, sans-serif;
   font-size: 25px;
 }
@@ -215,9 +215,11 @@ a {
 
 .divmainselect {
   color: #343f51;
+  margin-top: 5px;
+  margin-bottom: 25px;
   font-family: Quicksand, sans-serif;
-  font-size: 18px;
-  line-height: 18px;
+  font-size: 20px;
+  line-height: 25px;
 }
 
 .container-3 {
@@ -416,7 +418,7 @@ a {
   color: #343f51;
   text-align: center;
   border: 1px solid #ccc;
-  height: 40px;
+  height: 42px;
   padding-top: 0;
   line-height: 40px;
 }
@@ -589,10 +591,9 @@ a {
   grid-template-rows: auto auto;
   grid-template-columns: 1fr 1fr;
   grid-auto-columns: 1fr;
+  max-width: 940px;
   height: 150px;
-  margin-top: 20px;
-  margin-bottom: 60px;
-  padding-right: 40%;
+  margin: 20px auto 60px;
   display: block;
 }
 
@@ -603,6 +604,8 @@ a {
   grid-template-columns: 1fr 1fr;
   grid-auto-columns: 1fr;
   align-items: center;
+  width: 500px;
+  max-width: 499.184px;
   height: 150px;
   display: grid;
 }
@@ -777,7 +780,7 @@ a {
   grid-template-columns: 1fr;
   grid-auto-columns: 1fr;
   width: 250px;
-  height: 250px;
+  height: 240px;
   display: grid;
 }
 
@@ -786,7 +789,7 @@ a {
   max-width: 160px;
   height: 160px;
   max-height: 160px;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .field-label {
@@ -832,12 +835,13 @@ a {
 }
 
 .formblockstdregactivity {
-  height: 38px;
+  height: 39px;
   margin-bottom: 0;
+  line-height: 42px;
 }
 
 .formstdregactivity {
-  height: 40px;
+  height: 39px;
 }
 
 .select-field-2 {
@@ -849,7 +853,7 @@ a {
   background-color: #fff;
   border: 1px solid #343f51;
   border-radius: 5px;
-  height: 38px;
+  height: 40px;
   margin-bottom: 0;
   padding: 0;
   font-family: Quicksand, sans-serif;
@@ -859,11 +863,11 @@ a {
   aspect-ratio: auto;
   border: 1px solid #343f51;
   border-radius: 5px;
-  height: 38px;
+  height: 39px;
   margin-bottom: 0;
   padding: 0;
   font-family: Quicksand, sans-serif;
-  line-height: 18px;
+  line-height: 19px;
   overflow: auto;
 }
 
@@ -886,7 +890,7 @@ a {
 .divblockstdregdate {
   border: 1px solid #343f51;
   border-radius: 5px;
-  height: 38px;
+  height: 40px;
 }
 
 .divtableactivitytable-copy {
@@ -1330,7 +1334,7 @@ a {
   text-align: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 10%;
+  margin-top: 5%;
   margin-bottom: 10%;
   display: flex;
   position: relative;
@@ -1349,26 +1353,28 @@ a {
 .divmaincolumncell {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  border: 3px solid #343f51;
+  border: 1px solid #343f51;
   border-radius: 15px;
   grid-template-rows: 4fr 1fr;
   grid-template-columns: 1fr;
   grid-auto-columns: 1fr;
   width: 250px;
-  height: 250px;
+  height: 240px;
   display: grid;
 }
 
 .divmaincolumntext {
   color: #343f51;
-  margin-top: 10px;
+  margin-top: 5px;
+  margin-bottom: 25px;
   font-family: Quicksand, sans-serif;
   font-size: 20px;
-  line-height: 20px;
+  line-height: 25px;
 }
 
 .headingadminmain {
   color: #343f51;
+  margin-bottom: 60px;
   font-family: Quicksand, sans-serif;
   font-size: 25px;
 }
@@ -1381,20 +1387,29 @@ a {
                  / 1fr;
   grid-auto-columns: 1fr;
   width: 400px;
-  height: 250px;
+  height: 240px;
   display: grid;
 }
 
 .divblockadminmaincolumngridcell {
   grid-column-gap: 16px;
   grid-row-gap: 16px;
-  border: 3px solid #343f51;
+  border: 1px solid #343f51;
   border-radius: 10px;
   grid-template-rows: auto;
   grid-template-columns: 1fr .5fr;
   grid-auto-columns: 1fr;
   width: 400px;
-  height: 120px;
+  height: 115px;
+  display: grid;
+}
+
+.divblockadminmaincgctext {
+  grid-column-gap: 16px;
+  grid-row-gap: 16px;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+  grid-auto-columns: 1fr;
   display: grid;
 }
 
@@ -1405,9 +1420,13 @@ a {
 
 .headingcgctext {
   color: #343f51;
+  text-align: left;
+  text-indent: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
   font-family: Quicksand, sans-serif;
   font-size: 20px;
-  line-height: 20px;
+  line-height: 25px;
 }
 
 .containerselectgridaa {
@@ -2009,6 +2028,7 @@ a {
   margin-top: 0;
   margin-bottom: 0;
   font-family: Quicksand, sans-serif;
+  font-size: 30px;
   display: block;
 }
 
@@ -2601,6 +2621,23 @@ a {
   width: 300px;
   margin-top: 10px;
   font-family: Quicksand, sans-serif;
+}
+
+.divcslmainselect {
+  color: #343f51;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-family: Quicksand, sans-serif;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.divcslmainimage {
+  width: 160px;
+  max-width: 160px;
+  height: 160px;
+  max-height: 160px;
+  margin-top: 25px;
 }
 
 #w-node-fb5edaf7-fccd-61d1-7aa4-29afc6feeeac-7d4faf48 {
