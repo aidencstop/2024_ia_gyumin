@@ -27,7 +27,7 @@ urlpatterns = [
     # path('manager-deleteuser/', views.Delete_user.as_view(), name='manager-deleteuser'),
     path('manager-deletecounselor/<int:id>/', views.manager_deletecounselor, name='manager-deletecounselor'),
     path('manager-deletestudent/<int:id>/', views.manager_deletestudent, name='manager-deletestudent'),
-    path('manager-deleteactivity/<int:id>/', views.manager_deleteactivity, name='manager-deleteactivity'),
-    path('manager-editactivity/<int:id>/', views.manager_editactivity, name='manager-editactivity'),
-    path('manager-addactivity/', views.manager_addactivity, name='manager-addactivity'),
+    path('manager-deletecategory/<int:id>/', views.manager_deletecategory, name='manager-deletecategory'),
+    path('manager-editcategory/<int:id>/', views.manager_editcategory, name='manager-editcategory'),
+    path('manager-addcategory/', views.manager_addcategory, name='manager-addcategory'),
 ]

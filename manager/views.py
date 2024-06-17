@@ -209,15 +209,11 @@ def manager_managemajors(request):
 # View function for managing categories and activities
 @login_required
 def manager_managecatact(request):
-    categories = Category.objects.all()
-    category_activity_tuples = []
-    for category in categories:
-        activities = Activity.objects.filter(category=category, is_active=True)
-        category_activity_tuples.append((category, activities))
-    print(category_activity_tuples)
+    categories = Category.objects.filter(is_active=True)
+
 
     context = {
-        'category_activity_tuples': category_activity_tuples,
+        'categories': categories,
     }
 
     return render(request, 'manager_managecatact.html', context)
@@ -328,31 +324,47 @@ def manager_deletestudent(request, id):
     return redirect('manager-studentlist')
 
 @login_required
-def manager_deleteactivity(request, id):
-    del_activity = Activity.objects.get(pk=id)
-    del_activity.is_active = False
-    del_activity.save()
+def manager_deletecategory(request, id):
+    category_subjects = Category.objects.get(name='Subjects')
+    category_awards = Category.objects.get(name='Awards')
+    category_isa = Category.objects.get(name='In-school Activities')
+    category_ea = Category.objects.get(name='Extracurricular Activities')
+    category_va = Category.objects.get(name='Volunteer Activities')
+    important_category_ids = []
+    important_category_ids.append(category_subjects.pk)
+    important_category_ids.append(category_awards.pk)
+    important_category_ids.append(category_isa.pk)
+    important_category_ids.append(category_ea.pk)
+    important_category_ids.append(category_va.pk)
+    if id in important_category_ids:
+        pass
+    else:
+        del_category = Category.objects.get(pk=id)
+        del_category.is_active = False
+        del_category.save()
     return redirect('manager-managecatact')
 
 @login_required
-def manager_editactivity(request, id):
+def manager_editcategory(request, id):
     if request.method == 'POST':
-        new_activity_name = request.POST.get('new_name')
-        activity = Activity.objects.get(pk=id)
-        activity.name = new_activity_name
-        activity.save()
+        new_category_name = request.POST.get('new_name')
+        category = Category.objects.get(pk=id)
+        category.name = new_category_name
+        category.save()
         return redirect('manager-managecatact')
-    activity = Activity.objects.get(pk=id)
-    return render(request, 'manager_editactivity.html', {'activity': activity})
+    category = Category.objects.get(pk=id)
+    return render(request, 'manager_editcategory.html', {'category': category})
 
 @login_required
-def manager_addactivity(request):
+def manager_addcategory(request):
     if request.method == 'POST':
-        category_id = request.POST.get('category')
-        category = Category.objects.get(pk=category_id)
-        new_activity_name = request.POST.get('new_name')
-        activity = Activity(name=new_activity_name, category=category)
-        activity.save()
+        categories = Category.objects.all()
+        existing_cat_name_list = [cat.name for cat in categories]
+        new_category_name = request.POST.get('new_name')
+        if new_category_name in existing_cat_name_list:
+            pass
+        else:
+            category = Category(name=new_category_name)
+            category.save()
         return redirect('manager-managecatact')
-    categories = Category.objects.all()
-    return render(request, 'manager_addactivity.html', {'categories': categories})
+    return render(request, 'manager_addcategory.html')

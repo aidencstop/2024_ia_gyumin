@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://www.webflow.com  --><!--  Last Published: Thu May 23 2024 12:05:52 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://www.webflow.com  --><!--  Last Published: Sat Jun 01 2024 13:12:42 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="660b5a58e366d1d1dad88ea4" data-wf-site="65dae9a8aed2bddc7d4faf42">
 <head>
   <meta charset="utf-8">
@@ -23,7 +23,7 @@
 <body class="body">
   <section class="sectionmaintitle sectionheader sectionheaderlogout">
     <h1 class="headingmaintitle headingladn">               NLCS Pathfinder</h1>
-    <div id="w-node-_5389d32f-b943-dbea-3426-abf0cc92b799-dad88ea4" class="divblocklogoutbuttonwrap">
+    <div id="w-node-d2daa522-833e-3a5c-a043-483bea9c1fed-dc3c8bde" class="divblocklogoutbuttonwrap">
       <a href="{% url 'manager-logout' %}" style="text-decoration:none"><img class="img-fluid" src="{% static 'img/logout.png' %}" alt="Logo"></a>
     </div>
   </section>
@@ -31,7 +31,7 @@
     <div class="w-layout-blockcontainer containerstdregheader w-container">
       <div class="divstdregessentialheader">
         <div id="w-node-f18b932d-7f52-d60e-bbf3-5157eddd1049-dad88ea4" class="divstdregheaderleft">
-          <h1 class="headingstdregheaderleft">Category/Activity List</h1>
+          <h1 class="headingstdregheaderleft">Category List</h1>
         </div>
         <div id="w-node-_99867401-9b1f-be79-e3d1-4157feefab60-dad88ea4" class="divstdregheaderright">
           <a class="divhousebutton" href="{% url 'manager-main' %}" style="text-decoration:none"><img class="img-fluid" src="{% static 'img/home.png' %}" alt="Logo"></a>
@@ -41,7 +41,7 @@
     <div class="w-layout-blockcontainer containercatactlistfilter w-container">
       <div class="divblockcslstdlistfiltertotalgrid">
         <div id="w-node-_8e2939d1-d35d-5519-19f4-0a6d148886d4-dad88ea4" class="divblockadmincatactlistfiltergrid">
-          <a id="w-node-e73b9f8f-0a56-692d-36ef-a5c4766e689d-dad88ea4" class="divblockadminaddactbutton" style="text-decoration:none; color:white" href="/manager-addactivity/">+ Add Activity</a>
+          <a id="w-node-e73b9f8f-0a56-692d-36ef-a5c4766e689d-dad88ea4" class="divblockadminaddactbutton" style="text-decoration:none; color:white" href="/manager-addcategory/">+ Add Category</a>
         </div>
         <div id="w-node-_8e2939d1-d35d-5519-19f4-0a6d148886d8-dad88ea4" class="divblockcslstdlistfeaturesgrid">
           <div id="w-node-_8e2939d1-d35d-5519-19f4-0a6d148886d9-dad88ea4" class="divblockcslstdlistfeaturestext">
@@ -57,35 +57,19 @@
       <div class="divcatactlisttable">
         <div id="w-node-cf370158-e546-3441-ffe0-6c4fa484b8b1-dad88ea4" class="divtablecatactlistheader">Select</div>
         <div id="w-node-e06b81cd-ba85-55b8-9b0d-b3d87825d772-dad88ea4" class="divtablecatactlistheader">Category</div>
-        <div id="w-node-bb5e6395-51e4-5298-146c-524bc37f5fd3-dad88ea4" class="divtablecatactlistheader">Activity</div>
-        <div id="w-node-_8cdf0f05-96d2-03e4-55f8-217a8cec7878-dad88ea4" class="divtablecatactlistheader">Features</div>
-        {% for category, activities in category_activity_tuples %}
+        <div id="w-node-_41e9e996-4989-9903-5743-0cad7c0a8549-dad88ea4" class="divtablecatactlistheader">Features</div>
+        {% for cat in categories %}
         <div id="w-node-_179c3a27-b557-71e4-c74d-f36f7d2376ff-dad88ea4" class="divadmincatactlisttabledata">
           <h1 class="headingtableuserlistdata">{{ forloop.counter }}</h1>
         </div>
         <div id="w-node-_5197f733-7904-6cc7-9ecc-baf557ef89ba-dad88ea4" class="divadmincatactlisttabledata">
-          <h1 class="headingadmintablecatactlistdata">{{ category.name }}</h1>
-        </div>
-        <div id="w-node-_2a811ce6-2efa-3a34-5816-e5649499b8b6-dad88ea4" class="divadmincatactlisttabledata">
-          <ul role="list" class="listadminactivity w-list-unstyled">
-            {% for activity in activities %}
-            <li class="listitemadminactivity">
-              <h1 class="headingadmintablecatactlistdata">{{ activity.name }}</h1>
-            </li>
-            {% endfor %}
-          </ul>
+          <h1 class="headingadmintablecatactlistdata">{{ cat.name }}</h1>
         </div>
         <div id="w-node-ee067d1e-1cac-fcaa-cdac-187914f5f29c-dad88ea4" class="divadmincatactlisttabledata">
-          <ul id="w-node-_2f3d3610-db78-fce4-cb2e-471a8382956b-dad88ea4" role="list" class="listadminactivityfeatures w-list-unstyled">
-            {% for activity in activities %}
-            <li class="listitemadminactivityfeatures">
-              <div id="w-node-_2f3d3610-db78-fce4-cb2e-471a8382956d-dad88ea4" class="divadmintableuserlistactivitydatafeature">
-                <a id="w-node-_2f3d3610-db78-fce4-cb2e-471a8382956e-dad88ea4" class="divhousebutton" href="/manager-editactivity/{{ activity.id }}/"><img class="img-fluid" src="{% static 'img/write2.png' %}" alt="Logo"></a>
-                <a id="w-node-_2f3d3610-db78-fce4-cb2e-471a8382956f-dad88ea4" class="divhousebutton" style="text-decoration:none; cursor:pointer" onclick="showModal({{activity.id}});"><img class="img-fluid" src="{% static 'img/trash2.png' %}" alt="Logo"></a>
-              </div>
-            </li>
-            {% endfor %}
-          </ul>
+          <div id="w-node-_2f3d3610-db78-fce4-cb2e-471a8382956d-dad88ea4" class="divadmintableuserlistactivitydatafeature">
+            <a id="w-node-_2f3d3610-db78-fce4-cb2e-471a8382956e-dad88ea4" class="divhousebutton" href="/manager-editcategory/{{ cat.id }}/"><img class="img-fluid" src="{% static 'img/write2.png' %}" alt="Logo"></a>
+            <a id="w-node-_2f3d3610-db78-fce4-cb2e-471a8382956f-dad88ea4" class="divhousebutton" style="text-decoration:none; cursor:pointer" onclick="showModal({{cat.id}});"><img class="img-fluid" src="{% static 'img/trash2.png' %}" alt="Logo"></a>
+          </div>
         </div>
         {% endfor %}
       </div>
@@ -95,7 +79,7 @@
     <div class="w-layout-blockcontainer containeradmincsllistmodal w-container">
       <div class="divblockadmincatactlistmodalgrid">
         <div id="w-node-d3540a69-4b0c-0283-2736-aa209a85801b-dad88ea4" class="divblockadmincatactlistmodalmsg">
-          <h1 class="headingadmincatactlistmodaltitle">Do you really want to delete this activity?</h1>
+          <h1 class="headingadmincatactlistmodaltitle">Do you really want to delete this category?</h1>
         </div>
         <div id="w-node-f8339532-3460-2f5c-f667-81d8b928f1fd-dad88ea4" class="divblockadmincatactlistmodalbuttongrid">
           <a id="w-node-a1cd9eef-298d-9eda-7e2c-54fe61f55cd4-dad88ea4" class="divblockadmincatactlistmodalbutton" style="text-decoration:none; color:black; cursor:pointer">
@@ -112,7 +96,6 @@
   <script src="js/webflow.js" type="text/javascript"></script>
 </body>
 </html>
-
 <script>
 
 const modalObj = document.getElementById("modal-wrapper-hidden");
@@ -131,7 +114,7 @@ const modalObj = document.getElementById("modal-wrapper-hidden");
   function showModal(id) {
     console.log(id);
     okObj = document.getElementById("w-node-a1cd9eef-298d-9eda-7e2c-54fe61f55cd4-dad88ea4");
-    okObj.href = "/manager-deleteactivity/"+id+"/";
+    okObj.href = "/manager-deletecategory/"+id+"/";
     modalObj.classList.remove("modal-wrapper-hidden");
     modalObj.classList.add("modal-wrapper");
 
